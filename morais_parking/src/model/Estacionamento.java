@@ -7,7 +7,7 @@ public class Estacionamento {
 
 	// Attributes
 	List<Areas> controleAreas = new ArrayList<>();
-	List<Veiculo> cadastroVeiculos = new ArrayList<>();
+	List<Veiculo> cadastroVeiculos = new ArrayList<>(); //banco de dados ou arquivo
 
 	// Constructors
 	public Estacionamento() {
@@ -49,13 +49,30 @@ public class Estacionamento {
 		}
 	}
 
+	public void validarSaida(String placa) {
+		Veiculo veic = cadastroVeiculos.stream().filter(x -> x.getPlaca() == placa).findFirst().orElse(null);
+		if (veic == null) {
+			System.out.println("Veículo não registrado na entrada!");
+		} else {
+			Areas area = controleAreas.stream().filter(x -> x.getCategoria() == veic.getCategoria()).findFirst().orElse(null);
+			if (area == null) {
+				System.out.println("Área não Cadastrada!");
+			} else {
+				area.saidaVeiculo(veic);
+			}
+		}
+	}
+			
+	
+	
+	//metodo temporario
 	public void mostrarCadastroVeiculos() {
 		for (Veiculo veiculo : cadastroVeiculos) {
 			System.out.println(veiculo);
 		}
 	}
 
-	public void mostrarControleAreas() {
+	public void ocupacaoAreas() {
 		double percent = 0;
 		for (Areas area : controleAreas) {
 			int quantidade = area.getVeiculos().size();
@@ -69,7 +86,7 @@ public class Estacionamento {
 
 	// metodo total entrada
 	// metodo total saída
-	// controle ocupação por área
+	
 	// metodo localizar veiculo no cadastroVeiculos
 
 }

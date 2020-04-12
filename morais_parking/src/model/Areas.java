@@ -57,14 +57,6 @@ public class Areas {
 	}
 
 
-	
-	public void validarSaida(String placa) {
-		Veiculo veic = veiculosArea.stream().filter(x -> x.getPlaca() == placa).findFirst().orElse(null);
-		if (veic != null) {
-			saidaVeiculo(veic);
-		}
-	}
-
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Área: " + nome + " || ");

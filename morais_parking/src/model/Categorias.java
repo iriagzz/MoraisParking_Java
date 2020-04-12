@@ -4,7 +4,7 @@ public enum Categorias {
 
 	CARRO,
 	MOTO,
-	ÔNIBUS,
+	ONIBUS,
 	VAN,
 	ESPECIAL_FUNCIONARIO,
 	ESPECIAL_PREFERENCIAL
