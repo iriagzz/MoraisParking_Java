@@ -9,8 +9,8 @@ public class Veiculo {
 	private Categorias categoria;
 
 	/*
-	 * preferência vai ser um boolean aqui? que vai ser puxado de outra classe só
-	 * com os prioritarios?
+	 * a preferência muda quando o gestor dá um set na categoria do veículo.
+	 * 
 	 */
 
 	// Constructor
@@ -62,7 +62,6 @@ public class Veiculo {
 		sb.append("Proprietário: " + proprietario + "\n");
 		sb.append("Categoria: " + categoria + "\n");
 		sb.append("Modelo: " + modelo + "\n");
-
 		return sb.toString();
 	}
 

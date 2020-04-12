@@ -62,10 +62,10 @@ public class Areas {
 		sb.append("Área: " + nome + " || ");
 		sb.append("Capacidade: " + capacidade + " || ");
 		sb.append("Categoria: " + categoria);
-
 		return sb.toString();
 	}
 
+	//metodo provisorio
 	public void mostrarAreas() {
 		for (Veiculo veic : veiculosArea) {
 			System.out.println(veic);

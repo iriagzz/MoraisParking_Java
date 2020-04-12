@@ -7,7 +7,7 @@ public class Estacionamento {
 
 	// Attributes
 	List<Areas> controleAreas = new ArrayList<>();
-	List<Veiculo> cadastroVeiculos = new ArrayList<>(); //banco de dados ou arquivo
+	List<Veiculo> cadastroVeiculos = new ArrayList<>(); // banco de dados ou arquivo
 
 	// Constructors
 	public Estacionamento() {
@@ -35,37 +35,40 @@ public class Estacionamento {
 		this.controleAreas.add(area);
 	}
 
-	public void validarEntrada(String placa) {
-		Veiculo veic = cadastroVeiculos.stream().filter(x -> x.getPlaca() == placa).findFirst().orElse(null);
-		if (veic == null) {
-			System.out.println("Veículo não cadastrado!");
-		} else {
-			Areas area = controleAreas.stream().filter(x -> x.getCategoria() == veic.getCategoria()).findFirst().orElse(null);
-			if (area == null) {
-				System.out.println("Área não Cadastrada!");
-			} else {
-				area.entradaVeiculo(veic);
+	public Veiculo validarVeiculo(String placa) {
+		for (Veiculo veiculo : this.cadastroVeiculos) {
+			if (placa.equals(veiculo.getPlaca())) {
+				return veiculo;
 			}
+		}
+		return null;
+	}
+
+	public void validarEntrada(String placa) {
+		if (this.validarVeiculo(placa) != null) {
+			Veiculo veic = this.validarVeiculo(placa);
+			for (Areas area : controleAreas) {
+				if (area.getCategoria() == veic.getCategoria()) {
+					area.entradaVeiculo(veic);
+				}
+			}
+		} else {
+			System.out.println("Veículo não Cadastrado"); // saber se é uma pratica aceitavel...
 		}
 	}
 
 	public void validarSaida(String placa) {
-		Veiculo veic = cadastroVeiculos.stream().filter(x -> x.getPlaca() == placa).findFirst().orElse(null);
-		if (veic == null) {
-			System.out.println("Veículo não registrado na entrada!");
-		} else {
-			Areas area = controleAreas.stream().filter(x -> x.getCategoria() == veic.getCategoria()).findFirst().orElse(null);
-			if (area == null) {
-				System.out.println("Área não Cadastrada!");
-			} else {
+		Veiculo veic = this.validarVeiculo(placa);
+		for (Areas area : controleAreas) {
+			if (area.getCategoria() == veic.getCategoria()) {
 				area.saidaVeiculo(veic);
+			} else {
+				System.out.println("Entrada não registrada"); // saber se é uma pratica aceitavel...
 			}
 		}
 	}
-			
-	
-	
-	//metodo temporario
+
+	// metodo temporario
 	public void mostrarCadastroVeiculos() {
 		for (Veiculo veiculo : cadastroVeiculos) {
 			System.out.println(veiculo);
@@ -86,7 +89,7 @@ public class Estacionamento {
 
 	// metodo total entrada
 	// metodo total saída
-	
-	// metodo localizar veiculo no cadastroVeiculos
+	// metodo remover veiculo do cadastro
+	// limitador de entrada dependendo da capacidade da area
 
 }
