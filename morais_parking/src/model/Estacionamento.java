@@ -1,4 +1,4 @@
-package model;
+package Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +8,12 @@ public class Estacionamento {
 	// Attributes
 	List<Areas> controleAreas = new ArrayList<>();
 	List<Veiculo> cadastroVeiculos = new ArrayList<>(); // banco de dados ou arquivo
+	List<Eventos> cadastroEventos = new ArrayList<Eventos>();
+	List<Ocorrencias> cadastroOcorrencias = new ArrayList<Ocorrencias>();
 
 	// Constructors
-	public Estacionamento() {
-
+	public Estacionamento(){
+		
 	}
 
 	// Getters and Setters
@@ -24,7 +26,9 @@ public class Estacionamento {
 	}
 
 	// Methods
+	
 
+	//Cadastros
 	public void cadastrarVeiculo(String proprietario, String placa, String modelo, Categorias categoria) {
 		Veiculo veiculo = new Veiculo(proprietario, placa, modelo, categoria);
 		this.cadastroVeiculos.add(veiculo);
@@ -34,7 +38,19 @@ public class Estacionamento {
 		Areas area = new Areas(nome, capacidade, categoria);
 		this.controleAreas.add(area);
 	}
-
+	
+	public void cadastrarEvento (String nome, String data, int vagas, String zonas) {
+		Eventos evento = new Eventos(nome, data, vagas, zonas);
+		this.cadastroEventos.add(evento);
+	}
+	
+	public void cadastrarOcorrencia (String tipo, Veiculo veiculos, String data, String hora, String fatos) {
+		Ocorrencias ocorrencia = new Ocorrencias(tipo, veiculos, data, hora, fatos);
+		this.cadastroOcorrencias.add(ocorrencia);
+	}
+	
+	
+	//Validação
 	public Veiculo validarVeiculo(String placa) {
 		for (Veiculo veiculo : this.cadastroVeiculos) {
 			if (placa.equals(veiculo.getPlaca())) {
@@ -74,6 +90,19 @@ public class Estacionamento {
 			System.out.println(veiculo);
 		}
 	}
+	
+	public void mostrarCadastroEventos() {
+		for (Eventos evento : cadastroEventos) {
+			System.out.println(evento);
+		}
+	}
+	
+	public void mostrarCadastroOcorrencias() {
+		for (Ocorrencias ocorrencia : cadastroOcorrencias) {
+			System.out.println(ocorrencia);
+		}
+	}
+
 
 	public void ocupacaoAreas() {
 		double percent = 0;
@@ -93,3 +122,5 @@ public class Estacionamento {
 	// limitador de entrada dependendo da capacidade da area
 
 }
+
+
