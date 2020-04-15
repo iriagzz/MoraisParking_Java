@@ -2,6 +2,8 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import Model.CatVeiculos;
+import javax.swing.JOptionPane;
 
 public class Estacionamento {
 
@@ -12,8 +14,8 @@ public class Estacionamento {
 	List<Ocorrencias> cadastroOcorrencias = new ArrayList<Ocorrencias>();
 
 	// Constructors
-	public Estacionamento(){
-		
+	public Estacionamento() {
+
 	}
 
 	// Getters and Setters
@@ -26,31 +28,40 @@ public class Estacionamento {
 	}
 
 	// Methods
-	
 
-	//Cadastros
-	public void cadastrarVeiculo(String proprietario, String placa, String modelo, Categorias categoria) {
+	// Cadastros
+	public void cadastrarVeiculo(String proprietario, String placa, String modelo, CatVeiculos categoria) {
 		Veiculo veiculo = new Veiculo(proprietario, placa, modelo, categoria);
 		this.cadastroVeiculos.add(veiculo);
 	}
 
-	public void cadastrarArea(String nome, Integer capacidade, Categorias categoria) {
+	public void cadastrarArea(String nome, Integer capacidade, CatVeiculos categoria) {
 		Areas area = new Areas(nome, capacidade, categoria);
 		this.controleAreas.add(area);
 	}
-	
-	public void cadastrarEvento (String nome, String data, int vagas, String zonas) {
+
+	public void cadastrarEvento(String nome, String data, int vagas, String zonas) {
 		Eventos evento = new Eventos(nome, data, vagas, zonas);
 		this.cadastroEventos.add(evento);
 	}
-	
-	public void cadastrarOcorrencia (String tipo, Veiculo veiculos, String data, String hora, String fatos) {
-		Ocorrencias ocorrencia = new Ocorrencias(tipo, veiculos, data, hora, fatos);
+
+	// Ocorrências
+
+	public void cadastrarOcorrencia(CatOcorrencias tipo, String data, String hora, String fatos, int quantVeiculos) {
+
+		Ocorrencias ocorrencia = new Ocorrencias(tipo, data, hora, fatos, quantVeiculos);
+		
+		for (int i = 0; i < ocorrencia.getQuantVeiculos(); i++) {
+			
+			String placa = JOptionPane.showInputDialog("Placa: ");
+			Veiculo veiculos = validarVeiculo(placa);
+			ocorrencia.addVeiculos(veiculos);
+		}
 		this.cadastroOcorrencias.add(ocorrencia);
+
 	}
-	
-	
-	//Validação
+
+	// Validação
 	public Veiculo validarVeiculo(String placa) {
 		for (Veiculo veiculo : this.cadastroVeiculos) {
 			if (placa.equals(veiculo.getPlaca())) {
@@ -90,19 +101,18 @@ public class Estacionamento {
 			System.out.println(veiculo);
 		}
 	}
-	
+
 	public void mostrarCadastroEventos() {
 		for (Eventos evento : cadastroEventos) {
 			System.out.println(evento);
 		}
 	}
-	
+
 	public void mostrarCadastroOcorrencias() {
 		for (Ocorrencias ocorrencia : cadastroOcorrencias) {
 			System.out.println(ocorrencia);
 		}
 	}
-
 
 	public void ocupacaoAreas() {
 		double percent = 0;
@@ -122,5 +132,3 @@ public class Estacionamento {
 	// limitador de entrada dependendo da capacidade da area
 
 }
-
-

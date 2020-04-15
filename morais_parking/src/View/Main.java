@@ -1,8 +1,8 @@
 package View;
 
-import Model.Categorias;
+import Model.CatOcorrencias;
+import Model.CatVeiculos;
 import Model.Estacionamento;
-import Model.Veiculo;
 
 public class Main {
 
@@ -15,21 +15,27 @@ public class Main {
 		estacionamentoIesp.cadastrarEvento("Inova Week", "25/05/2020", 500, "A");
 		
 		
-		estacionamentoIesp.cadastrarArea("Carros", 5, Categorias.CARRO);
-		estacionamentoIesp.cadastrarArea("Vans", 2, Categorias.VAN);
-		estacionamentoIesp.cadastrarArea("Especial_Preferencial", 3, Categorias.ESPECIAL_PREFERENCIAL);
+		estacionamentoIesp.cadastrarArea("Carros", 5, CatVeiculos.CARRO);
+		estacionamentoIesp.cadastrarArea("Vans", 2, CatVeiculos.VAN);
+		estacionamentoIesp.cadastrarArea("Especial_Preferencial", 3, CatVeiculos.ESPECIAL_PREFERENCIAL);
 
-		estacionamentoIesp.cadastrarVeiculo("Iria Guazzi", "OFX-9310", "HB-20", Categorias.CARRO);
-		estacionamentoIesp.cadastrarVeiculo("Roberto Mendes", "OXX-4455", "Ford K", Categorias.ESPECIAL_PREFERENCIAL);
-		estacionamentoIesp.cadastrarVeiculo("Motô do Dominó", "OZZ-3333", "Mercedez - Van", Categorias.VAN);
+		estacionamentoIesp.cadastrarVeiculo("Iria Guazzi", "OFX-9310", "HB-20", CatVeiculos.CARRO);
+		estacionamentoIesp.cadastrarVeiculo("Roberto Mendes", "OXX-4455", "Ford K", CatVeiculos.ESPECIAL_PREFERENCIAL);
+		estacionamentoIesp.cadastrarVeiculo("Motô do Dominó", "OZZ-3333", "Mercedez - Van", CatVeiculos.VAN);
 		
-		//estacionamentoIesp.cadastrarOcorrencia("Colisão", , "25/04/2020", "19:30", "O veículo em questão colidiu com o portão principal");
+		
+		estacionamentoIesp.cadastrarOcorrencia(CatOcorrencias.Colisao, "25/04/2020", "19:30", "O veículo em questão colidiu com o portão principal", 2);
 
+		
 		// mostrar cadastro
 		System.out.println("Veículos");
 		estacionamentoIesp.mostrarCadastroVeiculos();
+		
 		System.out.println("Eventos");
 		estacionamentoIesp.mostrarCadastroEventos();
+		
+		System.out.println("Ocorrências");
+		estacionamentoIesp.mostrarCadastroOcorrencias();
 
 		// entrada carro Iria
 		String placa = "OFX-9310";

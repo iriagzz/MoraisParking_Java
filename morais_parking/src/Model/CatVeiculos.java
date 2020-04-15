@@ -1,6 +1,6 @@
 package Model;
 
-public enum Categorias {
+public enum CatVeiculos {
 
 	CARRO,
 	MOTO,

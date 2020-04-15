@@ -7,11 +7,11 @@ public class Areas {
 	// Attributes
 	private String nome;
 	private Integer capacidade;
-	private Categorias categoria;
+	private CatVeiculos categoria;
 	private ArrayList<Veiculo> veiculosArea;
 
 	// Constructor
-	public Areas(String nome, Integer capacidade, Categorias categoria) {
+	public Areas(String nome, Integer capacidade, CatVeiculos categoria) {
 		this.nome = nome;
 		this.capacidade = capacidade;
 		this.categoria = categoria;
@@ -35,11 +35,11 @@ public class Areas {
 		this.capacidade = capacidade;
 	}
 
-	public Categorias getCategoria() {
+	public CatVeiculos getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(Categorias categoria) {
+	public void setCategoria(CatVeiculos categoria) {
 		this.categoria = categoria;
 	}
 
