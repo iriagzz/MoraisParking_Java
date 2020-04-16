@@ -30,8 +30,8 @@ public class Estacionamento {
 	// Methods
 
 	// Cadastros
-	public void cadastrarVeiculo(String proprietario, String placa, String modelo, CatVeiculos categoria) {
-		Veiculo veiculo = new Veiculo(proprietario, placa, modelo, categoria);
+	public void cadastrarVeiculo(Proprietario proprietario, String nome, String placa, String modelo, CatVeiculos categoria) {
+		Veiculo veiculo = new Veiculo(proprietario, nome, placa, modelo, categoria);
 		this.cadastroVeiculos.add(veiculo);
 	}
 

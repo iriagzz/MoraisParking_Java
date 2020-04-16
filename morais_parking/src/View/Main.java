@@ -3,6 +3,7 @@ package View;
 import Model.CatOcorrencias;
 import Model.CatVeiculos;
 import Model.Estacionamento;
+import Model.Proprietario;
 
 public class Main {
 
@@ -19,9 +20,9 @@ public class Main {
 		estacionamentoIesp.cadastrarArea("Vans", 2, CatVeiculos.VAN);
 		estacionamentoIesp.cadastrarArea("Especial_Preferencial", 3, CatVeiculos.ESPECIAL_PREFERENCIAL);
 
-		estacionamentoIesp.cadastrarVeiculo("Iria Guazzi", "OFX-9310", "HB-20", CatVeiculos.CARRO);
-		estacionamentoIesp.cadastrarVeiculo("Roberto Mendes", "OXX-4455", "Ford K", CatVeiculos.ESPECIAL_PREFERENCIAL);
-		estacionamentoIesp.cadastrarVeiculo("Motô do Dominó", "OZZ-3333", "Mercedez - Van", CatVeiculos.VAN);
+		estacionamentoIesp.cadastrarVeiculo(Proprietario.Aluno, "Iria Guazzi", "OFX-9310", "HB-20", CatVeiculos.CARRO);
+		estacionamentoIesp.cadastrarVeiculo(Proprietario.Aluno, "Roberto Mendes", "OXX-4455", "Ford K", CatVeiculos.ESPECIAL_PREFERENCIAL);
+		estacionamentoIesp.cadastrarVeiculo(Proprietario.Motorista, "Motô do Dominó", "OZZ-3333", "Mercedez - Van", CatVeiculos.VAN);
 		
 		
 		estacionamentoIesp.cadastrarOcorrencia(CatOcorrencias.Colisao, "25/04/2020", "19:30", "O veículo em questão colidiu com o portão principal", 2);

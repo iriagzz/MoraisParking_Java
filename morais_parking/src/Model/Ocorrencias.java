@@ -73,8 +73,8 @@ public class Ocorrencias {
 			return sb.toString();
 		}
 		
-		public void cadastrarVeiculoOcorrencias (String proprietario, String placa, String modelo, CatVeiculos categoria) {
-			Veiculo veiculo = new Veiculo(proprietario, placa, modelo, categoria);
+		public void cadastrarVeiculoOcorrencias (Proprietario proprietario, String nome, String placa, String modelo, CatVeiculos categoria) {
+			Veiculo veiculo = new Veiculo(proprietario, nome, placa, modelo, categoria);
 			this.veiculosOcorrencias.add(veiculo);
 		}
 		
