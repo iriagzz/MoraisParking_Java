@@ -5,7 +5,4 @@ public enum Proprietario {
 	Motorista,
 	Uber,
 	Familiar,
-	
-	
-
 }

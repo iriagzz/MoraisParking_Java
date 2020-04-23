@@ -1,9 +1,15 @@
 package View;
 
+
+
+import javax.swing.JOptionPane;
+
 import Model.CatOcorrencias;
+import Model.CatUsuario;
 import Model.CatVeiculos;
 import Model.Estacionamento;
 import Model.Proprietario;
+
 
 public class Main {
 
@@ -11,10 +17,21 @@ public class Main {
 
 		Estacionamento estacionamentoIesp = new Estacionamento();
 		
+		
+		
 		//Testes
+		
+		estacionamentoIesp.cadastrarUsuario(CatUsuario.FuncionarioEstacionamento, "Arthur", "voltas28", "Arthur Lacet", "10973236418", "Entrada");
+		estacionamentoIesp.cadastrarUsuario(CatUsuario.FuncionarioEstacionamento, "Guilherme", "maris2", "Arthur Lacet", "10973236418", "Entrada");
+		estacionamentoIesp.cadastrarUsuario(CatUsuario.FuncionarioEstacionamento, "Romulo", "farol", "Arthur Lacet", "10973236418", "Entrada");
+		
+		String usuario = JOptionPane.showInputDialog(null, "Digite o usuário: ");
+		String senha = JOptionPane.showInputDialog(null, "Digite a senha: ");
+		estacionamentoIesp.login(usuario, senha);
 		
 		estacionamentoIesp.cadastrarEvento("Inova Week", "25/05/2020", 500, "A");
 		
+	
 		
 		estacionamentoIesp.cadastrarArea("Carros", 5, CatVeiculos.CARRO);
 		estacionamentoIesp.cadastrarArea("Vans", 2, CatVeiculos.VAN);

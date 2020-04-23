@@ -8,29 +8,37 @@ import javax.swing.JOptionPane;
 public class Estacionamento {
 
 	// Attributes
+	
 	List<Areas> controleAreas = new ArrayList<>();
 	List<Veiculo> cadastroVeiculos = new ArrayList<>(); // banco de dados ou arquivo
 	List<Eventos> cadastroEventos = new ArrayList<Eventos>();
 	List<Ocorrencias> cadastroOcorrencias = new ArrayList<Ocorrencias>();
+	List<Usuarios> cadastroUsuario = new ArrayList<Usuarios>();
 
+	
 	// Constructors
 	public Estacionamento() {
-
 	}
 
+	
 	// Getters and Setters
+	
 	public List<Areas> getControleAreas() {
 		return controleAreas;
 	}
-
 	public List<Veiculo> getCadastroVeiculos() {
 		return cadastroVeiculos;
+	}
+	public List<Usuarios> getCadastroUsuario() {
+		return cadastroUsuario;
 	}
 
 	// Methods
 
-	// Cadastros
-	public void cadastrarVeiculo(Proprietario proprietario, String nome, String placa, String modelo, CatVeiculos categoria) {
+	// Registrations
+	
+	public void cadastrarVeiculo(Proprietario proprietario, String nome, String placa, String modelo,
+			CatVeiculos categoria) {
 		Veiculo veiculo = new Veiculo(proprietario, nome, placa, modelo, categoria);
 		this.cadastroVeiculos.add(veiculo);
 	}
@@ -44,15 +52,21 @@ public class Estacionamento {
 		Eventos evento = new Eventos(nome, data, vagas, zonas);
 		this.cadastroEventos.add(evento);
 	}
+	
+	public void cadastrarUsuario(CatUsuario funçao, String usuario, String senha, String nome, String cpf,
+			String setor) {
+		Usuarios funcionario = new Usuarios(funçao, usuario, senha, nome, cpf, setor);
+		this.cadastroUsuario.add(funcionario);
+	}
 
-	// Ocorrências
+	// Reports
 
 	public void cadastrarOcorrencia(CatOcorrencias tipo, String data, String hora, String fatos, int quantVeiculos) {
 
 		Ocorrencias ocorrencia = new Ocorrencias(tipo, data, hora, fatos, quantVeiculos);
-		
+
 		for (int i = 0; i < ocorrencia.getQuantVeiculos(); i++) {
-			
+
 			String placa = JOptionPane.showInputDialog("Placa: ");
 			Veiculo veiculos = validarVeiculo(placa);
 			ocorrencia.addVeiculos(veiculos);
@@ -61,7 +75,8 @@ public class Estacionamento {
 
 	}
 
-	// Validação
+	// Validation
+	
 	public Veiculo validarVeiculo(String placa) {
 		for (Veiculo veiculo : this.cadastroVeiculos) {
 			if (placa.equals(veiculo.getPlaca())) {
@@ -94,8 +109,32 @@ public class Estacionamento {
 			}
 		}
 	}
+	
+	public Usuarios validarUsuario(String usuario) {
+		for (Usuarios user : this.cadastroUsuario) {
+			if (usuario.equals(user.getUsuario())) {
+				return user;
+			}
+		}
+		return null;
+	}
+	
+	//Login
+	
+	public boolean login(String usuario, String senha) {
 
-	// metodo temporario
+		Usuarios user = validarUsuario(usuario);
+
+		if (user.getUsuario().equals(usuario) && user.getSenha().equals(senha)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+
+	// Temporary Methods
+	
 	public void mostrarCadastroVeiculos() {
 		for (Veiculo veiculo : cadastroVeiculos) {
 			System.out.println(veiculo);
@@ -119,6 +158,7 @@ public class Estacionamento {
 		for (Areas area : controleAreas) {
 			int quantidade = area.getVeiculos().size();
 			percent = (quantidade * 100 / area.getCapacidade());
+
 			System.out.println("\n--- " + area.getNome() + " ---\n");
 			System.out.println("A quantidade de " + area.getNome() + " é: " + quantidade);
 			System.out.println("O percentual de ocupação é: " + String.format("%.2f", percent) + "%");
