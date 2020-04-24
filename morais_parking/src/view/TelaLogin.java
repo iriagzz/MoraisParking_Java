@@ -17,10 +17,12 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import model.Estacionamento;
+import model.Usuario;
+
 import java.awt.Color;
 
 public class TelaLogin extends JInternalFrame {
-	private JTextField textField;
+	private JTextField textUsuario;
 	private JPasswordField textSenha;
 
 	/**
@@ -43,6 +45,7 @@ public class TelaLogin extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public TelaLogin() {
+		// Testes
 		Estacionamento estacionamentoIesp = new Estacionamento();
 		estacionamentoIesp.cadastrarUsuario("Funcionario RH", "Arthur", "voltas28", "Arthur Lacet", "10973236418",
 				"Entrada");
@@ -51,6 +54,7 @@ public class TelaLogin extends JInternalFrame {
 		estacionamentoIesp.cadastrarUsuario("Funcionario Estacionamento", "Guilherme", "maris2", "Arthur Lacet",
 				"10973236418", "Entrada");
 		estacionamentoIesp.cadastrarUsuario("Gestor", "Romulo", "farol", "Arthur Lacet", "10973236418", "Entrada");
+		// Fim Testes
 
 		setBorder(null);
 		setBounds(260, 100, 450, 300);
@@ -69,13 +73,13 @@ public class TelaLogin extends JInternalFrame {
 		label.setBounds(85, 146, 46, 14);
 		panel.add(label);
 
-		textField = new JTextField();
-		textField.setBounds(140, 52, 170, 29);
-		panel.add(textField);
-		textField.setColumns(10);
+		textUsuario = new JTextField();
+		textUsuario.setBounds(140, 52, 170, 29);
+		panel.add(textUsuario);
+		textUsuario.setColumns(10);
 
 		JLabel lblAviso = new JLabel("");
-		lblAviso.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblAviso.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblAviso.setForeground(Color.RED);
 		lblAviso.setBounds(41, 208, 236, 26);
 		panel.add(lblAviso);
@@ -83,16 +87,20 @@ public class TelaLogin extends JInternalFrame {
 		JButton btnLogin = new JButton("Entrar");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (estacionamentoIesp.login(lblUsuario.getText(), textSenha.getSelectedText())) {
+				System.out.println(estacionamentoIesp.validarUsuario(textUsuario.getText()));
+
+				if (estacionamentoIesp.login(textUsuario.getText(), new String(textSenha.getPassword()))) {
+					lblAviso.setText("");
 					dispose();
+
 				} else {
-					lblUsuario.setText("");
+					textUsuario.setText("");
 					textSenha.setText("");
 					lblAviso.setText("Usuário ou senha inválidos!");
 				}
-
 			}
 		});
+
 		btnLogin.setBounds(179, 148, 98, 26);
 		panel.add(btnLogin);
 
