@@ -1,13 +1,22 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 public class Estacionamento {
 
 	// Attributes
 	List<Areas> controleAreas = new ArrayList<>();
-	List<Veiculo> cadastroVeiculos = new ArrayList<>(); // banco de dados ou arquivo
+	List<Veiculo> cadastroVeiculos = new ArrayList<>();
+	List<Ocorrencias> cadastroOcorrencias = new ArrayList<>();
+	List<String> categorias = new ArrayList<>();
+	List<Relatorios> relatorioEntradas = new ArrayList<>();
+	List<Relatorios> relatorioStatus = new ArrayList<>();
+	List<Usuario> cadastroUsuario = new ArrayList<>();
+	List<Eventos> controleEventos = new ArrayList<Eventos>();
 
 	// Constructors
 	public Estacionamento() {
@@ -23,16 +32,40 @@ public class Estacionamento {
 		return cadastroVeiculos;
 	}
 
+	public List<Veiculo> getCadastroOcorrencias() {
+		return cadastroVeiculos;
+	}
+
+	public List<String> getCategorias() {
+		return categorias;
+	}
+
+	public List<Relatorios> getRelatorioEntradas() {
+		return relatorioEntradas;
+	}
+
+	public List<Relatorios> getRelatorioStatus() {
+		return relatorioStatus;
+	}
+
+	public List<Usuario> getCadastroUsuario() {
+		return cadastroUsuario;
+	}
+
+	public List<Eventos> getControleEventos() {
+		return controleEventos;
+	}
+
 	// Methods
 
-	public void cadastrarVeiculo(String proprietario, String placa, String modelo, Categorias categoria) {
+	// Veiculos
+	public void cadastrarVeiculo(String proprietario, String placa, String modelo, String categoria) {
 		Veiculo veiculo = new Veiculo(proprietario, placa, modelo, categoria);
 		this.cadastroVeiculos.add(veiculo);
 	}
 
-	public void cadastrarArea(String nome, Integer capacidade, Categorias categoria) {
-		Areas area = new Areas(nome, capacidade, categoria);
-		this.controleAreas.add(area);
+	public void removerVeiculo(Veiculo veiculo) {
+		this.cadastroVeiculos.remove(veiculo);
 	}
 
 	public Veiculo validarVeiculo(String placa) {
@@ -52,8 +85,6 @@ public class Estacionamento {
 					area.entradaVeiculo(veic);
 				}
 			}
-		} else {
-			System.out.println("Veículo não Cadastrado"); // saber se é uma pratica aceitavel...
 		}
 	}
 
@@ -63,33 +94,80 @@ public class Estacionamento {
 			if (area.getCategoria() == veic.getCategoria()) {
 				area.saidaVeiculo(veic);
 			} else {
-				System.out.println("Entrada não registrada"); // saber se é uma pratica aceitavel...
+				System.out.println("Entrada não registrada"); // tenho que fazer essa condição na interface? ou posso
 			}
 		}
 	}
 
-	// metodo temporario
-	public void mostrarCadastroVeiculos() {
-		for (Veiculo veiculo : cadastroVeiculos) {
-			System.out.println(veiculo);
-		}
+	// Areas
+	public void cadastrarArea(String nome, Integer capacidade, String categoria) {
+		Areas area = new Areas(nome, capacidade, categoria);
+		this.controleAreas.add(area);
+		this.categorias.add(categoria);
 	}
 
-	public void ocupacaoAreas() {
-		double percent = 0;
+	public int ocupacaoAreas(String categoria) {
+		int percent = 0;
 		for (Areas area : controleAreas) {
-			int quantidade = area.getVeiculos().size();
-			percent = (quantidade * 100 / area.getCapacidade());
-			System.out.println("\n--- " + area.getNome() + " ---\n");
-			System.out.println("A quantidade de " + area.getNome() + " é: " + quantidade);
-			System.out.println("O percentual de ocupação é: " + String.format("%.2f", percent) + "%");
+			if (categoria.equals(area.getCategoria())) {
+				int quantidade = area.getVeiculos().size();
+				percent = (quantidade * 100 / area.getCapacidade());
+			}
 		}
-
+		return percent;
 	}
 
-	// metodo total entrada
-	// metodo total saída
-	// metodo remover veiculo do cadastro
-	// limitador de entrada dependendo da capacidade da area
+	// Ocorrencias
+	public void cadastrarOcorrencia(String tipo, Integer quantidadeVeiculos, LocalDate data, String hora,
+			String fatos) {
+		Ocorrencias ocorrencia = new Ocorrencias(tipo, quantidadeVeiculos, data, hora, fatos);
+		for (int i = 0; i < ocorrencia.getQuantidadeVeiculos(); i++) {
+			String placa = JOptionPane.showInputDialog("Insira a placa: ");
+			Veiculo veiculo = this.validarVeiculo(placa);
+			ocorrencia.adicionarVeiculo(veiculo);
+		}
+		this.cadastroOcorrencias.add(ocorrencia);
+	}
 
+	// Eventos
+	public void cadastrarEvento(String nome, LocalDate data, Integer duracao, Integer vagas) {
+		for (int i = 0; i < duracao; i++) {
+			Eventos evento = new Eventos(nome, data.plusDays(i), duracao, vagas);
+			this.controleEventos.add(evento);
+		}
+	}
+
+	// Relatorios
+	public void relatorioVeiculosEntradas(LocalDate data, Veiculo veiculo) {
+		Relatorios relatVeiculos = new Relatorios(data, veiculo);
+		this.relatorioEntradas.add(relatVeiculos);
+	}
+
+	// Usuarios
+	public void cadastrarUsuario(String funçao, String usuario, String senha, String nome, String cpf, String setor) {
+		Usuario funcionario = new Usuario(funçao, usuario, senha, nome, cpf, setor);
+		this.cadastroUsuario.add(funcionario);
+	}
+
+	public Usuario validarUsuario(String usuario) {
+		for (Usuario user : this.cadastroUsuario) {
+			if (usuario.equals(user.getUsuario())) {
+				return user;
+			}
+		}
+		return null;
+	}
+
+	public boolean login(String usuario, String senha) {
+		Usuario user = validarUsuario(usuario);
+		if (user != null) {
+			if (user.getUsuario().equals(usuario) && user.getSenha().equals(senha)) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
 }

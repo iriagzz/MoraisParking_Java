@@ -6,16 +6,12 @@ public class Veiculo {
 	private String proprietario; // criar uma classe proprietario
 	private String placa;
 	private String modelo;
-	private Categorias categoria;
+	private String categoria;
 
-	/*
-	 * a preferência muda quando o gestor dá um set na categoria do veículo.
-	 * 
-	 */
+	
 
 	// Constructor
-	
-	public Veiculo(String proprietario, String placa, String modelo, Categorias categoria) {
+		public Veiculo(String proprietario, String placa, String modelo, String categoria) {
 		this.proprietario = proprietario;
 		this.placa = placa;
 		this.modelo = modelo;
@@ -47,11 +43,11 @@ public class Veiculo {
 		this.modelo = modelo;
 	}
 
-	public Categorias getCategoria() {
+	public String getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(Categorias categoria) {
+	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
 
@@ -64,5 +60,4 @@ public class Veiculo {
 		sb.append("Modelo: " + modelo + "\n");
 		return sb.toString();
 	}
-
 }

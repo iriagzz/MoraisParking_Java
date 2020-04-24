@@ -7,11 +7,11 @@ public class Areas {
 	// Attributes
 	private String nome;
 	private Integer capacidade;
-	private Categorias categoria;
+	private String categoria;
 	private ArrayList<Veiculo> veiculosArea;
 
 	// Constructor
-	public Areas(String nome, Integer capacidade, Categorias categoria) {
+	public Areas(String nome, Integer capacidade, String categoria) {
 		this.nome = nome;
 		this.capacidade = capacidade;
 		this.categoria = categoria;
@@ -35,11 +35,11 @@ public class Areas {
 		this.capacidade = capacidade;
 	}
 
-	public Categorias getCategoria() {
+	public String getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(Categorias categoria) {
+	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
 
@@ -66,7 +66,7 @@ public class Areas {
 	}
 
 	//metodo provisorio
-	public void mostrarAreas() {
+	public void mostrarAreas(Veiculo veiculo) {
 		for (Veiculo veic : veiculosArea) {
 			System.out.println(veic);
 		}
