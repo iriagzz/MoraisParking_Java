@@ -76,7 +76,7 @@ public class Principal extends javax.swing.JFrame {
 
 		// Data e Hora
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		JLabel lblTime = new JLabel("hora");
+		JLabel lblTime = new JLabel("Hora");
 		lblTime.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTime.setForeground(SystemColor.activeCaption);
 		lblTime.setFont(new Font("Tahoma", Font.BOLD, 20));

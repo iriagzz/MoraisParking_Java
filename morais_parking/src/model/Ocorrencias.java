@@ -7,24 +7,32 @@ import java.util.ArrayList;
 public class Ocorrencias {
 
 	//Attributes
+	private Integer id; 
 	private String tipo;
-	private ArrayList<Veiculo> veiculosOcorrencia;
 	private Integer quantidadeVeiculos;
+	private ArrayList<Veiculo> veiculosOcorrencia;
 	private LocalDate data;
 	private String hora;
 	private String fatos;
 
-	public Ocorrencias() {
+	
 
-	}
-
-	public Ocorrencias(String tipo, Integer quantidadeVeiculos, LocalDate data, String hora, String fatos) {
+	public Ocorrencias(Integer id, String tipo, Integer quantidadeVeiculos, LocalDate data, String hora, String fatos) {
+		this.id = id;
 		this.tipo = tipo;
 		this.quantidadeVeiculos = quantidadeVeiculos;
+		this.veiculosOcorrencia = new ArrayList<>();
 		this.data = data;
 		this.hora = hora;
 		this.fatos = fatos;
-		this.veiculosOcorrencia = new ArrayList<>();
+		}
+	
+	public Integer getId() {
+		return id;
+	}
+	
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getTipo() {
@@ -46,6 +54,7 @@ public class Ocorrencias {
 	public void setQuantidadeVeiculos(Integer quantidadeVeiculos) {
 		this.quantidadeVeiculos = quantidadeVeiculos;
 	}
+	
 
 	public LocalDate getData() {
 		return data;
@@ -74,6 +83,7 @@ public class Ocorrencias {
 	//Methods
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append("ID: " + id + "\n");
 		sb.append("Ocorrência: " + tipo + "\n");
 		sb.append("Veículos: " + veiculosOcorrencia + "\n");
 		sb.append("Data: " + data + "\n");
