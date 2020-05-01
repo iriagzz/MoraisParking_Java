@@ -17,10 +17,11 @@ public class Main {
 		Estacionamento estacionamento = new Estacionamento();
 
 		// VEICULOS
-		estacionamento.cadastrarVeiculo("Iria Guazzi", "QFX-9310", "HB-20", "CARRO");
-		estacionamento.cadastrarVeiculo("Roberto Mendes", "OXX-4455", "Ford K", "PREFERENCIAL");
-		estacionamento.cadastrarVeiculo("Motô do Dominó", "OZZ-3333", "Mercedez - Van", "VAN");
-		estacionamento.cadastrarVeiculo("Onildo", "OFH-8830", "Ford KA", "CARRO");
+		estacionamento.cadastrarVeiculo("Iria Guazzi", "20192007043","SI", "QFX-9310", "HB-20", "CARRO");
+		estacionamento.cadastrarVeiculo("Roberto Mendes","20192007043","SI", "OXX-4455", "Ford K", "PREFERENCIAL");
+		estacionamento.cadastrarVeiculo("Motô do Dominó","N/A","N/A", "OZZ-3333", "Mercedez - Van", "VAN");
+		estacionamento.cadastrarVeiculo("Onildo","N/A","N/A", "OFH-8830", "Ford KA", "CARRO");
+
 
 	
 		LocalDate data = LocalDate.parse("30/08/2020", fmt);
