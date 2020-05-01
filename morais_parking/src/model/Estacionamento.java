@@ -118,11 +118,7 @@ public class Estacionamento {
 		return percent;
 	}
 
-<<<<<<< HEAD
-	// Ocorrencias
-=======
-	// Ocorrências
->>>>>>> 88e7b299fe131e704fa0e1e2a74065e772cf5b04
+
 	public void cadastrarOcorrencia(Integer id, String tipo, Integer quantidadeVeiculos, LocalDate data, String hora,
 			String fatos) {
 		Ocorrencias ocorrencia = new Ocorrencias(id, tipo, quantidadeVeiculos, data, hora, fatos);
