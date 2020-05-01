@@ -20,8 +20,8 @@ public class Memoria {
 	
 	// Cadastrar Veiculo
 	public void armazenarVeiculos() {
-		estacionamento.cadastrarVeiculo("Iria Guazzi", "QFX-9310", "HB-20", "CARRO");
-		estacionamento.cadastrarVeiculo("Roberto Mendes", "OXX-4455", "Ford K", "ESPECIAL_PREFERENCIAL");
-		estacionamento.cadastrarVeiculo("Motô do Dominó", "OZZ-3333", "Mercedez - Van", "VAN");
+		estacionamento.cadastrarVeiculo("Iria Guazzi","20192007043","SI", "QFX-9310", "HB-20", "CARRO");
+		estacionamento.cadastrarVeiculo("Roberto Mendes","20192007043","SI", "OXX-4455", "Ford K", "ESPECIAL_PREFERENCIAL");
+		estacionamento.cadastrarVeiculo("Motô do Dominó","20192007043","SI", "OZZ-3333", "Mercedez - Van", "VAN");
 	}
 }

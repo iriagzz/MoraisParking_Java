@@ -1,17 +1,17 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Veiculo {
 
 	// Atributes
-	private String proprietario; // criar uma classe proprietario
+	private Proprietario proprietario;
 	private String placa;
 	private String modelo;
 	private String categoria;
 
-	
-
 	// Constructor
-		public Veiculo(String proprietario, String placa, String modelo, String categoria) {
+	public Veiculo(Proprietario proprietario, String placa, String modelo, String categoria) {
 		this.proprietario = proprietario;
 		this.placa = placa;
 		this.modelo = modelo;
@@ -19,14 +19,14 @@ public class Veiculo {
 	}
 
 	// Getters and Setters
-	public String getProprietario() {
-		return proprietario;
+	public Proprietario getProprietario() {
+			return proprietario;
 	}
-
-	public void setProprietario(String proprietario) {
+	
+	public void setProprietario(Proprietario proprietario) {
 		this.proprietario = proprietario;
 	}
-
+	
 	public String getPlaca() {
 		return placa;
 	}
@@ -51,13 +51,15 @@ public class Veiculo {
 		this.categoria = categoria;
 	}
 
-	// Methods
+	
+	// Metodos
+		
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Placa: " + placa + "\n");
-		sb.append("Proprietário: " + proprietario + "\n");
-		sb.append("Categoria: " + categoria + "\n");
-		sb.append("Modelo: " + modelo + "\n");
+		sb.append("Proprietário: " + proprietario.toString() + "\n");
+		sb.append("Placa: " + this.placa + "\n");
+		sb.append("Categoria: " + this.categoria + "\n");
+		sb.append("Modelo: " + this.modelo + "\n");
 		return sb.toString();
 	}
 }

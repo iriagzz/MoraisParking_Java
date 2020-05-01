@@ -3,16 +3,11 @@ package view;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.List;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -22,18 +17,17 @@ import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
-import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import model.Estacionamento;
 import model.Memoria;
+import model.Proprietario;
 import model.Relatorios;
 import model.Veiculo;
-import javax.swing.JScrollPane;
 
 public class TelaStatus extends JInternalFrame {
 	private Memoria memoria = new Memoria();
@@ -58,10 +52,10 @@ public class TelaStatus extends JInternalFrame {
 	public TelaStatus() {
 
 		// VEICULOS
-		estacionamento.cadastrarVeiculo("Iria Guazzi", "QFX-9310", "HB-20", "CARRO");
-		estacionamento.cadastrarVeiculo("Roberto Mendes", "OXX-4455", "Ford K", "PREFERENCIAL");
-		estacionamento.cadastrarVeiculo("Motô do Dominó", "OZZ-3333", "Mercedez - Van", "VAN");
-		estacionamento.cadastrarVeiculo("Onildo", "OFH-8830", "Ford KA", "CARRO");
+		estacionamento.cadastrarVeiculo("Iria Guazzi","20192007043","SI", "QFX-9310", "HB-20", "CARRO");
+		estacionamento.cadastrarVeiculo("Roberto Mendes", "20192007043","SI", "OXX-4455", "Ford K", "PREFERENCIAL");
+		estacionamento.cadastrarVeiculo("Motô do Dominó","n/a","n/a", "OZZ-3333", "Mercedez - Van", "VAN");
+		estacionamento.cadastrarVeiculo("Onildo", "n/a","n/a","OFH-8830", "Ford KA", "CARRO");
 
 		// AREAS
 		estacionamento.cadastrarArea("Carros", 5, "CARRO");
@@ -71,14 +65,19 @@ public class TelaStatus extends JInternalFrame {
 		estacionamento.cadastrarArea("Ônibus", 3, "ONIBUS");
 
 		// RELATORIO
-		Veiculo v1 = new Veiculo("Iria Guazzi", "QFX-9310", "HB-20", "CARRO");
-		Veiculo v2 = new Veiculo("Onildo", "OFH-8830", "Ford KA", "CARRO");
-		Veiculo v3 = new Veiculo("Motô do Dominó", "OZZ-3333", "Mercedez - Van", "VAN");
-		Veiculo v4 = new Veiculo("marilac", "QFX-9310", "HB-20", "CARRO");
-		Veiculo v5 = new Veiculo("veloso", "OFH-8830", "Ford KA", "CARRO");
-		Veiculo v6 = new Veiculo("larissa", "OZZ-3333", "Mercedez - Van", "VAN");
-		Veiculo v7 = new Veiculo("ERVAL", "QFX-9310", "HB-20", "VAN");
-		Veiculo v8 = new Veiculo("veloso111", "OFH-8830", "Ford KA", "CARRO");
+		Proprietario iria = new Proprietario("Iria Guazzi","20192007043","SI");
+		Proprietario roberts = new Proprietario("Roberto Mendes", "20192007043","SI");
+		Proprietario moto = new Proprietario("Motô do Dominó","n/a","n/a");
+		Proprietario netto = new Proprietario("Onildo", "n/a","n/a");
+		
+		Veiculo v1 = new Veiculo(iria,"QFX-9310", "HB-20", "CARRO");
+		Veiculo v2 = new Veiculo(netto, "OFH-8830", "Ford KA", "CARRO");
+		Veiculo v3 = new Veiculo(moto, "OZZ-3333", "Mercedez - Van", "VAN");
+		Veiculo v4 = new Veiculo(roberts, "QFX-9310", "HB-20", "CARRO");
+		Veiculo v5 = new Veiculo(iria, "OFH-8830", "Ford KA", "CARRO");
+		Veiculo v6 = new Veiculo(moto, "OZZ-3333", "Mercedez - Van", "VAN");
+		Veiculo v7 = new Veiculo(netto, "QFX-9310", "HB-20", "VAN");
+		Veiculo v8 = new Veiculo(roberts, "OFH-8830", "Ford KA", "CARRO");
 
 		LocalDate date = LocalDate.now();
 
@@ -183,7 +182,7 @@ public class TelaStatus extends JInternalFrame {
 							&& r.getVeiculo().getCategoria().equals(comboBoxCateg.getSelectedItem().toString())) {
 						rowData[0] = fmt.format(r.getData());
 						rowData[1] = r.getVeiculo().getPlaca();
-						rowData[2] = r.getVeiculo().getProprietario();
+						rowData[2] = r.getVeiculo().getProprietario().getNome();
 						table.addRow(rowData);
 					}
 				}

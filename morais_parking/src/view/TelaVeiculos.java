@@ -24,6 +24,7 @@ import javax.swing.border.TitledBorder;
 import model.Estacionamento;
 import model.Memoria;
 import model.Veiculo;
+import javax.swing.JEditorPane;
 
 public class TelaVeiculos extends JInternalFrame {
 	private Memoria memoria = new Memoria();
@@ -31,6 +32,8 @@ public class TelaVeiculos extends JInternalFrame {
 	private JTextField textProprietario;
 	private JTextField textPlacaCad;
 	private JTextField textModelo;
+	private JTextField textMatricula;
+	private JTextField textCurso;
 
 	public static void main(String[] args) {
 		Memoria memoria = new Memoria();
@@ -51,10 +54,10 @@ public class TelaVeiculos extends JInternalFrame {
 
 	public TelaVeiculos() {
 		// VEICULOS
-		estacionamento.cadastrarVeiculo("Iria Guazzi", "QFX-9310", "HB-20", "CARRO");
-		estacionamento.cadastrarVeiculo("Roberto Mendes", "OXX-4455", "Ford K", "PREFERENCIAL");
-		estacionamento.cadastrarVeiculo("Motô do Dominó", "OZZ-3333", "Mercedez - Van", "VAN");
-		estacionamento.cadastrarVeiculo("Onildo", "OFH-8830", "Ford KA", "CARRO");
+		estacionamento.cadastrarVeiculo("Iria Guazzi","20192007043","SI", "QFX-9310", "HB-20", "CARRO");
+		estacionamento.cadastrarVeiculo("Roberto Mendes","20192007007","SI", "OXX-4455", "Ford K", "PREFERENCIAL");
+		estacionamento.cadastrarVeiculo("Motô do Dominó","n/a","n/a", "OZZ-3333", "Mercedez - Van", "VAN");
+		estacionamento.cadastrarVeiculo("Onildo", "n/a", "n/a", "OFH-8830", "Ford KA", "CARRO");
 
 		// AREAS
 		estacionamento.cadastrarArea("Carros", 5, "CARRO");
@@ -87,40 +90,40 @@ public class TelaVeiculos extends JInternalFrame {
 		JLabel lblTitular = new JLabel("Propriet\u00E1rio:");
 		lblTitular.setForeground(new Color(43, 52, 61));
 		lblTitular.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTitular.setBounds(10, 48, 110, 30);
+		lblTitular.setBounds(10, 25, 110, 30);
 		panelGerenciar.add(lblTitular);
 
 		textProprietario = new JTextField();
 		textProprietario.setToolTipText("");
-		textProprietario.setBounds(130, 48, 268, 30);
+		textProprietario.setBounds(130, 25, 268, 30);
 		panelGerenciar.add(textProprietario);
 
 		JLabel lblPlacaCad = new JLabel("Placa: ");
 		lblPlacaCad.setForeground(new Color(43, 52, 61));
 		lblPlacaCad.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblPlacaCad.setBounds(10, 99, 110, 30);
+		lblPlacaCad.setBounds(10, 148, 110, 30);
 		panelGerenciar.add(lblPlacaCad);
 
 		textPlacaCad = new JTextField();
 		textPlacaCad.setToolTipText("");
-		textPlacaCad.setBounds(130, 99, 268, 30);
+		textPlacaCad.setBounds(130, 148, 268, 30);
 		panelGerenciar.add(textPlacaCad);
 
 		JLabel lblModelo = new JLabel("Modelo:");
 		lblModelo.setForeground(new Color(43, 52, 61));
 		lblModelo.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblModelo.setBounds(10, 153, 110, 30);
+		lblModelo.setBounds(10, 189, 110, 30);
 		panelGerenciar.add(lblModelo);
 
 		textModelo = new JTextField();
 		textModelo.setToolTipText("");
-		textModelo.setBounds(130, 153, 268, 30);
+		textModelo.setBounds(130, 189, 268, 30);
 		panelGerenciar.add(textModelo);
 
 		JLabel lblCategoria = new JLabel("Categoria:");
 		lblCategoria.setForeground(new Color(43, 52, 61));
 		lblCategoria.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblCategoria.setBounds(10, 207, 110, 30);
+		lblCategoria.setBounds(10, 230, 110, 30);
 		panelGerenciar.add(lblCategoria);
 
 		JComboBox comboBoxCateg = new JComboBox();
@@ -130,7 +133,7 @@ public class TelaVeiculos extends JInternalFrame {
 			comboBoxCateg.addItem(categoria);
 		}
 
-		comboBoxCateg.setBounds(130, 207, 268, 30);
+		comboBoxCateg.setBounds(130, 230, 268, 30);
 		panelGerenciar.add(comboBoxCateg);
 
 		JButton btnFechar = new JButton("Fechar");
@@ -144,12 +147,12 @@ public class TelaVeiculos extends JInternalFrame {
 		panelGerenciar.add(btnFechar);
 
 		JButton btnCadastrarVeiculo = new JButton("Cadastrar Ve\u00EDculo");
-		btnCadastrarVeiculo.setBounds(529, 107, 168, 44);
+		btnCadastrarVeiculo.setBounds(537, 120, 168, 44);
 		panelGerenciar.add(btnCadastrarVeiculo);
 		btnCadastrarVeiculo.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				estacionamento.cadastrarVeiculo(textProprietario.getText(), textPlacaCad.getText(),
+				estacionamento.cadastrarVeiculo(textProprietario.getText(), textMatricula.getText(), textCurso.getText(),  textPlacaCad.getText(),
 						textModelo.getText(), comboBoxCateg.getSelectedItem().toString());
 				textProprietario.setText("");
 				textPlacaCad.setText("");
@@ -158,6 +161,34 @@ public class TelaVeiculos extends JInternalFrame {
 		});
 
 		btnCadastrarVeiculo.setIcon(new ImageIcon(TelaVeiculos.class.getResource("/images/add.png")));
+		
+		JLabel lblMatricula = new JLabel("Matr\u00EDcula");
+		lblMatricula.setForeground(new Color(43, 52, 61));
+		lblMatricula.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblMatricula.setBounds(10, 66, 110, 30);
+		panelGerenciar.add(lblMatricula);
+		
+		textMatricula = new JTextField();
+		textMatricula.setToolTipText("");
+		textMatricula.setBounds(130, 66, 268, 30);
+		panelGerenciar.add(textMatricula);
+		
+		JLabel lblCurso = new JLabel("Curso:");
+		lblCurso.setForeground(new Color(43, 52, 61));
+		lblCurso.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCurso.setBounds(10, 107, 110, 30);
+		panelGerenciar.add(lblCurso);
+		
+		textCurso = new JTextField();
+		textCurso.setToolTipText("");
+		textCurso.setBounds(130, 107, 268, 30);
+		panelGerenciar.add(textCurso);
+		
+		JEditorPane dtrpnCasoOProprietrio = new JEditorPane();
+		dtrpnCasoOProprietrio.setBackground(SystemColor.activeCaption);
+		dtrpnCasoOProprietrio.setText("Caso o Propriet\u00E1rio n\u00E3o seja aluno ou esteja vinculado a algum aluno, n\u00E3o preencher os campos \"Matr\u00EDcula\" e \"Curso\".");
+		dtrpnCasoOProprietrio.setBounds(481, 25, 291, 55);
+		panelGerenciar.add(dtrpnCasoOProprietrio);
 		panelConsultar.setLayout(null);
 
 		JLabel lblConsultarVeiculo = new JLabel("Consultar Ve\u00EDculo");

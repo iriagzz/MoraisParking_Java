@@ -32,8 +32,8 @@ public class Estacionamento {
 		return cadastroVeiculos;
 	}
 
-	public List<Veiculo> getCadastroOcorrencias() {
-		return cadastroVeiculos;
+	public List<Ocorrencias> getCadastroOcorrencias() {
+		return cadastroOcorrencias;
 	}
 
 	public List<String> getCategorias() {
@@ -56,10 +56,11 @@ public class Estacionamento {
 		return controleEventos;
 	}
 
-	// Methods
+	// Metodos
 
 	// Veiculos
-	public void cadastrarVeiculo(String proprietario, String placa, String modelo, String categoria) {
+	public void cadastrarVeiculo(String nome, String matricula, String curso, String placa, String modelo, String categoria) {
+		Proprietario proprietario = new Proprietario(nome, matricula, curso);
 		Veiculo veiculo = new Veiculo(proprietario, placa, modelo, categoria);
 		this.cadastroVeiculos.add(veiculo);
 	}
@@ -118,15 +119,19 @@ public class Estacionamento {
 	}
 
 	// Ocorrencias
-	public void cadastrarOcorrencia(String tipo, Integer quantidadeVeiculos, LocalDate data, String hora,
+	public void cadastrarOcorrencia(Integer id, String tipo, Integer quantidadeVeiculos, LocalDate data, String hora,
 			String fatos) {
-		Ocorrencias ocorrencia = new Ocorrencias(tipo, quantidadeVeiculos, data, hora, fatos);
-		for (int i = 0; i < ocorrencia.getQuantidadeVeiculos(); i++) {
-			String placa = JOptionPane.showInputDialog("Insira a placa: ");
-			Veiculo veiculo = this.validarVeiculo(placa);
-			ocorrencia.adicionarVeiculo(veiculo);
-		}
+		Ocorrencias ocorrencia = new Ocorrencias(id, tipo, quantidadeVeiculos, data, hora, fatos);
 		this.cadastroOcorrencias.add(ocorrencia);
+		for (int i = 0; i < quantidadeVeiculos; i++) {
+			String placa = JOptionPane.showInputDialog(null, "Insira a placa da Ocorrencia: ");
+			Veiculo veiculo = validarVeiculo(placa);
+			if (veiculo != null) {
+				ocorrencia.adicionarVeiculo(veiculo);
+			}else {
+				JOptionPane.showMessageDialog(null, "Veículo não cadastrado");
+			}
+		}
 	}
 
 	// Eventos
