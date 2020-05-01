@@ -77,14 +77,21 @@ public class TelaVeiculos extends JInternalFrame {
 		JPanel panelGerenciar = new JPanel();
 		panelGerenciar.setBackground(SystemColor.activeCaption);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(panelConsultar, GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
-				.addComponent(panelGerenciar, GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(panelConsultar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				.addGroup(groupLayout.createSequentialGroup()
-						.addComponent(panelConsultar, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-						.addComponent(panelGerenciar, GroupLayout.PREFERRED_SIZE, 284, GroupLayout.PREFERRED_SIZE)));
+					.addComponent(panelGerenciar, GroupLayout.PREFERRED_SIZE, 798, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(34, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(panelConsultar, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(panelGerenciar, GroupLayout.PREFERRED_SIZE, 306, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
 		panelGerenciar.setLayout(null);
 
 		JLabel lblTitular = new JLabel("Propriet\u00E1rio:");

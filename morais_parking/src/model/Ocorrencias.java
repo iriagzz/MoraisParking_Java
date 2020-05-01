@@ -6,18 +6,21 @@ import java.util.ArrayList;
 
 public class Ocorrencias {
 
+<<<<<<< HEAD
 	// Attributes
 	private Integer id;
+=======
+	//Attributes
+	private Integer id; 
+>>>>>>> 88e7b299fe131e704fa0e1e2a74065e772cf5b04
 	private String tipo;
-	private ArrayList<Veiculo> veiculosOcorrencia;
 	private Integer quantidadeVeiculos;
+	private ArrayList<Veiculo> veiculosOcorrencia;
 	private LocalDate data;
 	private String hora;
 	private String fatos;
 
-	public Ocorrencias() {
-
-	}
+	
 
 	public Ocorrencias(Integer id, String tipo, Integer quantidadeVeiculos, LocalDate data, String hora, String fatos) {
 		this.id = id;
@@ -27,6 +30,7 @@ public class Ocorrencias {
 		this.data = data;
 		this.hora = hora;
 		this.fatos = fatos;
+<<<<<<< HEAD
 
 	}
 
@@ -34,6 +38,14 @@ public class Ocorrencias {
 		return id;
 	}
 
+=======
+		}
+	
+	public Integer getId() {
+		return id;
+	}
+	
+>>>>>>> 88e7b299fe131e704fa0e1e2a74065e772cf5b04
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -57,6 +69,7 @@ public class Ocorrencias {
 	public void setQuantidadeVeiculos(Integer quantidadeVeiculos) {
 		this.quantidadeVeiculos = quantidadeVeiculos;
 	}
+	
 
 	public LocalDate getData() {
 		return data;
@@ -85,12 +98,21 @@ public class Ocorrencias {
 	// Methods
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+<<<<<<< HEAD
 		sb.append("Id: " + this.id + "\n");
 		sb.append("Ocorrência: " + this.tipo + "\n");
 		sb.append("Veículos: " + this.veiculosOcorrencia + "\n");
 		sb.append("Data: " + this.data + "\n");
 		sb.append("Hora: " + this.hora + "\n");
 		sb.append("Resumo dos fatos: " + this.fatos + "\n");
+=======
+		sb.append("ID: " + id + "\n");
+		sb.append("Ocorrência: " + tipo + "\n");
+		sb.append("Veículos: " + veiculosOcorrencia + "\n");
+		sb.append("Data: " + data + "\n");
+		sb.append("Hora: " + hora +"\n");
+		sb.append("Resumo dos fatos: " + fatos +"\n");
+>>>>>>> 88e7b299fe131e704fa0e1e2a74065e772cf5b04
 		return sb.toString();
 	}
 
