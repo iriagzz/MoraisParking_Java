@@ -1,51 +1,45 @@
 package view;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.SystemColor;
-import javax.swing.JLabel;
-import java.awt.Font;
 import java.awt.Color;
-import javax.swing.JTextField;
-
-import model.Estacionamento;
-import model.Memoria;
-import model.Ocorrencias;
-import model.Veiculo;
-
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.awt.event.ActionEvent;
 
-public class TelaOcorrencias {
-	Memoria memoria = new Memoria();
-	Estacionamento estacionamento = memoria.getEstacionamento();
-	private JFrame frame;
-	private JTextField textID;
-	private JTextField textFatos;
-	private JTextField textData;
-	private JTextField textHora;
-	private JTextField textVeículos;
-	private JTextField textTipo;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.text.MaskFormatter;
+
+import model.Estacionamento;
+import javax.swing.JFormattedTextField;
+import javax.swing.JComboBox;
+
+public class TelaOcorrencias extends JInternalFrame {
+	private JTextField textNumeroDeVeiculos;
+	private JComboBox comboBoxTipo;
+	private JLabel textID;
+	private JFormattedTextField textData;
+	private JFormattedTextField textHora;
+	private JTextPane textDescricaoDosFatos;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaOcorrencias window = new TelaOcorrencias();
-					window.frame.setVisible(true);
+					TelaOcorrencias frame = new TelaOcorrencias();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -54,139 +48,147 @@ public class TelaOcorrencias {
 	}
 
 	/**
-	 * Create the application.
+	 * Create the frame.
 	 */
 	public TelaOcorrencias() {
+
+		Estacionamento estacionamento = new Estacionamento();
+
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-		// VEICULOS
-		estacionamento.cadastrarVeiculo("Iria Guazzi","20192007043","SI", "QFX-9310", "HB-20", "CARRO");
-		estacionamento.cadastrarVeiculo("Roberto Mendes", "20192007043","SI", "OXX-4455", "Ford K", "PREFERENCIAL");
-		estacionamento.cadastrarVeiculo("Motô do Dominó","n/a","n/a", "OZZ-3333", "Mercedez - Van", "VAN");
-		estacionamento.cadastrarVeiculo("Onildo", "n/a","n/a","OFH-8830", "Ford KA", "CARRO");
+		// Definir Máscaras
 
-		// AREAS
-		estacionamento.cadastrarArea("Carros", 5, "CARRO");
-		estacionamento.cadastrarArea("Vans", 2, "VAN");
-		estacionamento.cadastrarArea("Preferencial", 3, "PREFERENCIAL");
-		estacionamento.cadastrarArea("Motocicletas", 3, "MOTO");
-		estacionamento.cadastrarArea("Ônibus", 3, "ONIBUS");
-		initialize();
+		MaskFormatter mascaraData = null;
+		MaskFormatter mascaraHora = null;
 
-	}
+		try {
+			mascaraData = new MaskFormatter("##/##/####");
+			mascaraHora = new MaskFormatter("##:##");
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null, "Erro");
+		}
 
-		frame = new JFrame();
-		frame.setBounds(100, 100, 950, 658);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBackground(SystemColor.inactiveCaption);
+		setBounds(90, 10, 800, 520);
+		getContentPane().setLayout(null);
 
-		JPanel Screem = new JPanel();
-		Screem.setBackground(SystemColor.activeCaption);
-		frame.getContentPane().add(Screem, BorderLayout.CENTER);
-		Screem.setLayout(null);
+		JLabel lblID = new JLabel("ID:");
+		lblID.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblID.setForeground(new Color(43, 52, 67));
+		lblID.setBounds(47, 66, 82, 32);
+		getContentPane().add(lblID);
 
 		JLabel lblTipo = new JLabel("Tipo:");
-		lblTipo.setBounds(10, 216, 110, 30);
-		lblTipo.setForeground(new Color(43, 52, 61));
+		lblTipo.setForeground(new Color(43, 52, 67));
 		lblTipo.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Screem.add(lblTipo);
+		lblTipo.setBounds(47, 109, 82, 32);
+		getContentPane().add(lblTipo);
 
-		textID = new JTextField();
-		textID.setBounds(170, 177, 268, 30);
-		textID.setToolTipText("");
-		Screem.add(textID);
-
-		JLabel lblVeculosEnvolvidos = new JLabel("N\u00FAmero de Ve\u00EDculos:");
-		lblVeculosEnvolvidos.setBounds(10, 257, 150, 30);
-		lblVeculosEnvolvidos.setForeground(new Color(43, 52, 61));
-		lblVeculosEnvolvidos.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Screem.add(lblVeculosEnvolvidos);
-
-		textFatos = new JTextField();
-		textFatos.setBounds(170, 382, 268, 120);
-		textFatos.setToolTipText("");
-		Screem.add(textFatos);
+		JLabel lblNmeroDeVeiculos = new JLabel("Quantidade de Ve\u00EDculos:");
+		lblNmeroDeVeiculos.setForeground(new Color(43, 52, 67));
+		lblNmeroDeVeiculos.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNmeroDeVeiculos.setBounds(47, 152, 185, 32);
+		getContentPane().add(lblNmeroDeVeiculos);
 
 		JLabel lblData = new JLabel("Data:");
-		lblData.setBounds(10, 298, 110, 30);
-		lblData.setForeground(new Color(43, 52, 61));
+		lblData.setForeground(new Color(43, 52, 67));
 		lblData.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Screem.add(lblData);
-
-		textData = new JTextField();
-		textData.setBounds(170, 300, 268, 30);
-		textData.setToolTipText("");
-		Screem.add(textData);
+		lblData.setBounds(47, 195, 82, 32);
+		getContentPane().add(lblData);
 
 		JLabel lblHora = new JLabel("Hora:");
-		lblHora.setBounds(10, 339, 110, 30);
-		lblHora.setForeground(new Color(43, 52, 61));
+		lblHora.setForeground(new Color(43, 52, 67));
 		lblHora.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Screem.add(lblHora);
+		lblHora.setBounds(47, 238, 82, 32);
+		getContentPane().add(lblHora);
+
+		JLabel lblDescricaoDosFatos = new JLabel("Descri\u00E7\u00E3o dos Fatos:");
+		lblDescricaoDosFatos.setForeground(new Color(43, 52, 67));
+		lblDescricaoDosFatos.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDescricaoDosFatos.setBounds(47, 288, 142, 32);
+		getContentPane().add(lblDescricaoDosFatos);
+		textNumeroDeVeiculos = new JTextField();
+		textNumeroDeVeiculos.setColumns(10);
+		textNumeroDeVeiculos.setBounds(242, 152, 214, 24);
+		getContentPane().add(textNumeroDeVeiculos);
+
+		comboBoxTipo = new JComboBox();
+		comboBoxTipo.setBounds(242, 109, 214, 24);
+		comboBoxTipo.addItem("");
+
+		// Adicionando itens ao combobox
+		for (String tipo : estacionamento.getTipoOcorrencia()) {
+			comboBoxTipo.addItem(tipo);
+		}
+		getContentPane().add(comboBoxTipo);
+
+		textID = new JLabel();
+		textID.setFont(new Font("Tahoma", Font.BOLD, 12));
+		textID.setText(String.valueOf(estacionamento.getCadastroOcorrencias().size() + 1));
+		textID.setBackground(Color.WHITE);
+		textID.setForeground(new Color(43, 52, 67));
+		textID.setBounds(242, 71, 198, 24);
+		getContentPane().add(textID);
+
+		textData = new JFormattedTextField(mascaraData);
+		textData.setColumns(10);
+		textData.setBounds(242, 195, 214, 24);
+		getContentPane().add(textData);
+
+		textHora = new JFormattedTextField(mascaraHora);
+		textHora.setColumns(10);
+		textHora.setBounds(242, 238, 214, 24);
+		getContentPane().add(textHora);
+
+		textDescricaoDosFatos = new JTextPane();
+		textDescricaoDosFatos.setBounds(47, 321, 394, 106);
+		getContentPane().add(textDescricaoDosFatos);
+
+		JButton btnIncluirVeiculos = new JButton("Incluir Ve\u00EDculos");
+		btnIncluirVeiculos.setIcon(new ImageIcon(TelaOcorrencias.class.getResource("/images/add.png")));
+		btnIncluirVeiculos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				estacionamento.cadastrarOcorrencia(Integer.parseInt(textID.getText()),
+						comboBoxTipo.getSelectedItem().toString(), Integer.parseInt(textNumeroDeVeiculos.getText()),
+						LocalDate.parse(textData.getText(), fmt), textHora.getText(), textDescricaoDosFatos.getText());
+			}
+		});
+		btnIncluirVeiculos.setBounds(473, 321, 142, 46);
+		getContentPane().add(btnIncluirVeiculos);
 
 		JButton btnFechar = new JButton("Fechar");
-		btnFechar.setBounds(745, 518, 104, 41);
 		btnFechar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 
-			private void dispose() {
-			}
 		});
-		Screem.add(btnFechar);
+		btnFechar.setIcon(new ImageIcon(TelaStatus.class.getResource("/images/close.png")));
+		btnFechar.setBounds(670, 438, 104, 41);
+		getContentPane().add(btnFechar);
 
-		textHora = new JTextField();
-		textHora.setBounds(170, 341, 268, 30);
-		textHora.setToolTipText("");
-		Screem.add(textHora);
-
-		JLabel lblOcorrencias = new JLabel("Ocorr\u00EAncias");
-		lblOcorrencias.setBounds(331, 62, 192, 30);
-		lblOcorrencias.setFont(new Font("Tahoma", Font.BOLD, 30));
-		Screem.add(lblOcorrencias);
-
-		JLabel lblDescrioDosFatos = new JLabel("Descri\u00E7\u00E3o dos Fatos:");
-		lblDescrioDosFatos.setBounds(10, 425, 150, 30);
-		lblDescrioDosFatos.setForeground(new Color(43, 52, 61));
-		lblDescrioDosFatos.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Screem.add(lblDescrioDosFatos);
-
-		JLabel lblID = new JLabel("ID:");
-		lblID.setBounds(10, 175, 150, 30);
-		lblID.setForeground(new Color(43, 52, 61));
-		lblID.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Screem.add(lblID);
-
-		textVeículos = new JTextField();
-		textVeículos.setBounds(170, 259, 268, 30);
-		textVeículos.setToolTipText("");
-		Screem.add(textVeículos);
-
-		textTipo = new JTextField();
-		textTipo.setBounds(170, 218, 268, 30);
-		textTipo.setToolTipText("");
-		Screem.add(textTipo);
-
-		JButton btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.addActionListener(new ActionListener() {
+		JButton btnCadastrarOcorrencia = new JButton("Cadastrar");
+		btnCadastrarOcorrencia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				estacionamento.cadastrarOcorrencia(Integer.parseInt(textID.getText()), textTipo.getText(),
-						Integer.parseInt(textVeículos.getText()), LocalDate.parse(textData.getText(), fmt),
-						textHora.getText(), textFatos.getText());
-
-				for (Ocorrencias ocorrencia : estacionamento.getCadastroOcorrencias()) {
-					System.out.println(ocorrencia);
-					System.out.println(ocorrencia.getVeiculosOcorrencia());
-				}
+				textID.setText("");
+				comboBoxTipo.setSelectedItem("");
+				textNumeroDeVeiculos.setText("");
+				textData.setText("");
+				textHora.setText("");
+				textDescricaoDosFatos.setText("");
 			}
 		});
-		btnCadastrar.setBounds(245, 527, 89, 23);
-		Screem.add(btnCadastrar);
+
+		btnCadastrarOcorrencia.setIcon(new ImageIcon(TelaOcorrencias.class.getResource("/images/confirm.png")));
+		btnCadastrarOcorrencia.setBounds(473, 382, 142, 45);
+		getContentPane().add(btnCadastrarOcorrencia);
+
+		JLabel lblCadastrarOcorrncia = new JLabel("Cadastrar Ocorr\u00EAncia");
+		lblCadastrarOcorrncia.setForeground(new Color(43, 52, 67));
+		lblCadastrarOcorrncia.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCadastrarOcorrncia.setBounds(47, 11, 293, 32);
+		getContentPane().add(lblCadastrarOcorrncia);
+
 	}
 }

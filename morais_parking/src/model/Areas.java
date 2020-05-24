@@ -56,20 +56,20 @@ public class Areas {
 		this.veiculosArea.remove(veiculo);
 	}
 
-
+	//Listar Veiculos na Área
+	public Veiculo veiculosArea(Veiculo veiculo) {
+		for (Veiculo veic : veiculosArea) {
+			return veic;
+		}
+		return null;
+	}
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Área: " + nome + " || ");
-		sb.append("Capacidade: " + capacidade + " || ");
-		sb.append("Categoria: " + categoria);
+		sb.append("Área: " + this.nome + "\n");
+		sb.append("Capacidade: " + this.capacidade + "\n");
+		sb.append("Categoria: " + this.categoria);
 		return sb.toString();
 	}
 
-	//metodo provisorio
-	public void mostrarAreas(Veiculo veiculo) {
-		for (Veiculo veic : veiculosArea) {
-			System.out.println(veic);
-		}
-	}
-	
 }

@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 public class Veiculo {
 
 	// Atributes
@@ -56,10 +54,10 @@ public class Veiculo {
 		
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Proprietário: " + proprietario.toString() + "\n");
+		sb.append(proprietario.toString() + "\n");
 		sb.append("Placa: " + this.placa + "\n");
 		sb.append("Categoria: " + this.categoria + "\n");
-		sb.append("Modelo: " + this.modelo + "\n");
+		sb.append("Modelo: " + this.modelo);
 		return sb.toString();
 	}
 }

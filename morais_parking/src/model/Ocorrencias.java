@@ -1,4 +1,3 @@
-
 package model;
 
 import java.time.LocalDate;
@@ -6,18 +5,14 @@ import java.util.ArrayList;
 
 public class Ocorrencias {
 
-
-
-	//Attributes
-	private Integer id; 
+	// Attributes
+	private Integer id;
 	private String tipo;
 	private Integer quantidadeVeiculos;
 	private ArrayList<Veiculo> veiculosOcorrencia;
 	private LocalDate data;
 	private String hora;
 	private String fatos;
-
-	
 
 	public Ocorrencias(Integer id, String tipo, Integer quantidadeVeiculos, LocalDate data, String hora, String fatos) {
 		this.id = id;
@@ -56,7 +51,6 @@ public class Ocorrencias {
 	public void setQuantidadeVeiculos(Integer quantidadeVeiculos) {
 		this.quantidadeVeiculos = quantidadeVeiculos;
 	}
-	
 
 	public LocalDate getData() {
 		return data;
@@ -83,20 +77,19 @@ public class Ocorrencias {
 	}
 
 	// Methods
+	public void adicionarVeiculo(Veiculo veiculo) {
+		this.veiculosOcorrencia.add(veiculo);
+	}
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-
 		sb.append("ID: " + this.id + "\n");
 		sb.append("Ocorrência: " + this.tipo + "\n");
 		sb.append("Veículos: " + this.veiculosOcorrencia + "\n");
 		sb.append("Data: " + this.data + "\n");
 		sb.append("Hora: " + this.hora + "\n");
-		sb.append("Resumo dos fatos: " + this.fatos + "\n");
+		sb.append("Resumo dos fatos: " + this.fatos);
 		return sb.toString();
-	}
-
-	public void adicionarVeiculo(Veiculo veiculo) {
-		this.veiculosOcorrencia.add(veiculo);
 	}
 
 }

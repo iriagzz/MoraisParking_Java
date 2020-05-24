@@ -6,28 +6,27 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
-import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
 
 import model.Estacionamento;
 import model.Memoria;
@@ -35,14 +34,13 @@ import model.Relatorios;
 import model.Veiculo;
 
 public class TelaControleAcesso extends JInternalFrame {
+
 	private Memoria memoria = new Memoria();
 	private Estacionamento estacionamento = memoria.getEstacionamento();
+	Relatorios relatorio = memoria.getRelatorios();
 
 	public static void main(String[] args) {
-		Memoria memoria = new Memoria();
-		Estacionamento estacionamento = memoria.getEstacionamento();
-		Relatorios relatorio = memoria.getRelatorios();
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -57,20 +55,29 @@ public class TelaControleAcesso extends JInternalFrame {
 
 	public TelaControleAcesso() {
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		
 
-		// VEICULOS
-		estacionamento.cadastrarVeiculo("Iria Guazzi", "20192007043","SI", "QFX-9310", "HB-20", "CARRO");
-		estacionamento.cadastrarVeiculo("Roberto Mendes","20192007043","SI", "OXX-4455", "Ford K", "PREFERENCIAL");
-		estacionamento.cadastrarVeiculo("Motô do Dominó","N/A","N/A", "OZZ-3333", "Mercedez - Van", "VAN");
-		estacionamento.cadastrarVeiculo("Onildo","N/A","N/A", "OFH-8830", "Ford KA", "CARRO");
+		// VEICULOS (para testes)
+		estacionamento.cadastrarVeiculo("Iria Guazzi", "20192007043", "SI", "QFX-9310", "HB-20", "CARRO");
+		estacionamento.cadastrarVeiculo("Roberto Mendes", "20192007043", "SI", "OXX-4455", "Ford K", "PREFERENCIAL");
+		estacionamento.cadastrarVeiculo("Motô do Dominó", "N/A", "N/A", "OZZ-3333", "Mercedez - Van", "VAN");
+		estacionamento.cadastrarVeiculo("Onildo", "N/A", "N/A", "OFH-8830", "Ford KA", "CARRO");
 
-		// AREAS
+		// AREAS (para testes)
 		estacionamento.cadastrarArea("Carros", 5, "CARRO");
 		estacionamento.cadastrarArea("Vans", 2, "VAN");
 		estacionamento.cadastrarArea("Preferencial", 3, "PREFERENCIAL");
 		estacionamento.cadastrarArea("Motocicletas", 3, "MOTO");
 		estacionamento.cadastrarArea("Ônibus", 3, "ONIBUS");
+
+		// Definir Máscaras
+		MaskFormatter mascaraPlaca = null;
+
+		try {
+			mascaraPlaca = new MaskFormatter("UUU-####");
+
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null, "Erro");
+		}
 
 		setBorder(null);
 		getContentPane().setBackground(new Color(43, 52, 61));
@@ -84,13 +91,13 @@ public class TelaControleAcesso extends JInternalFrame {
 		panelGerenciar.setBackground(SystemColor.activeCaption);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(panelGerenciar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-				.addComponent(panelConsultar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
+				.addComponent(panelConsultar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addComponent(panelGerenciar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(Alignment.LEADING,
+				groupLayout.createSequentialGroup()
 						.addComponent(panelConsultar, GroupLayout.PREFERRED_SIZE, 224, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-						.addComponent(panelGerenciar, GroupLayout.PREFERRED_SIZE, 227, GroupLayout.PREFERRED_SIZE)));
+						.addPreferredGap(ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+						.addComponent(panelGerenciar, GroupLayout.PREFERRED_SIZE, 238, GroupLayout.PREFERRED_SIZE)));
 		panelGerenciar.setLayout(null);
 
 		JButton btnFechar = new JButton("Fechar");
@@ -117,14 +124,15 @@ public class TelaControleAcesso extends JInternalFrame {
 		JComboBox comboBoxArea = new JComboBox();
 		comboBoxArea.setBounds(20, 110, 186, 31);
 		panelGerenciar.add(comboBoxArea);
-		
+
 		// caso o gestor inclua nova área, essa já será inserida no combobox do veículo
 		comboBoxArea.addItem("");
 		for (String categoria : estacionamento.getCategorias()) {
 			comboBoxArea.addItem(categoria);
 		}
 
-		//Quando selecionar o comboBox, o progresso já atualiza a depender da área selecionada
+		// Quando selecionar o comboBox, o progresso já atualiza a depender da área
+		// selecionada
 		comboBoxArea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				progressBarOcupacao.setValue(estacionamento.ocupacaoAreas(comboBoxArea.getSelectedItem().toString()));
@@ -166,14 +174,13 @@ public class TelaControleAcesso extends JInternalFrame {
 		panelConsultar.add(lblData);
 		LocalDate data = LocalDate.now();
 		lblData.setText(fmt.format(data));
-	
-		JTextField textPlaca = new JTextField();
-		textPlaca.setToolTipText("");
+
+		JFormattedTextField textPlaca = new JFormattedTextField(mascaraPlaca);
 		textPlaca.setBounds(150, 76, 129, 30);
 		panelConsultar.add(textPlaca);
 
 		JTextPane textResulBusca = new JTextPane();
-		textResulBusca.setBounds(542, 23, 210, 111);
+		textResulBusca.setBounds(542, 23, 210, 126);
 		panelConsultar.add(textResulBusca);
 		textResulBusca.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Dados do Ve\u00EDculo",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 51, 102)));

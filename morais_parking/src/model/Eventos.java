@@ -54,10 +54,10 @@ public class Eventos {
 	// Methods
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Evento: " + nome + "\n");
-		sb.append("Data: " + dataInicio + "\n");
-		sb.append("Duracao: " + duracao + "\n");
-		sb.append("Vagas: " + vagas + "\n");
+		sb.append("Evento: " + this.nome + "\n");
+		sb.append("Data: " + this.dataInicio + "\n");
+		sb.append("Duracao: " + this.duracao + "\n");
+		sb.append("Vagas: " + this.vagas);
 		return sb.toString();
 	}
 }

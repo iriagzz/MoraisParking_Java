@@ -51,26 +51,27 @@ public class TelaStatus extends JInternalFrame {
 
 	public TelaStatus() {
 
-		// VEICULOS
-		estacionamento.cadastrarVeiculo("Iria Guazzi","20192007043","SI", "QFX-9310", "HB-20", "CARRO");
-		estacionamento.cadastrarVeiculo("Roberto Mendes", "20192007043","SI", "OXX-4455", "Ford K", "PREFERENCIAL");
-		estacionamento.cadastrarVeiculo("Motô do Dominó","n/a","n/a", "OZZ-3333", "Mercedez - Van", "VAN");
-		estacionamento.cadastrarVeiculo("Onildo", "n/a","n/a","OFH-8830", "Ford KA", "CARRO");
+		//dados para testes
+		// VEICULOS (para testes)
+		estacionamento.cadastrarVeiculo("Iria Guazzi", "20192007043", "SI", "QFX-9310", "HB-20", "CARRO");
+		estacionamento.cadastrarVeiculo("Roberto Mendes", "20192007043", "SI", "OXX-4455", "Ford K", "PREFERENCIAL");
+		estacionamento.cadastrarVeiculo("Motô do Dominó", "n/a", "n/a", "OZZ-3333", "Mercedez - Van", "VAN");
+		estacionamento.cadastrarVeiculo("Onildo", "n/a", "n/a", "OFH-8830", "Ford KA", "CARRO");
 
-		// AREAS
+		// AREAS (para testes)
 		estacionamento.cadastrarArea("Carros", 5, "CARRO");
 		estacionamento.cadastrarArea("Vans", 2, "VAN");
 		estacionamento.cadastrarArea("Preferencial", 3, "PREFERENCIAL");
 		estacionamento.cadastrarArea("Motocicletas", 3, "MOTO");
 		estacionamento.cadastrarArea("Ônibus", 3, "ONIBUS");
 
-		// RELATORIO
-		Proprietario iria = new Proprietario("Iria Guazzi","20192007043","SI");
-		Proprietario roberts = new Proprietario("Roberto Mendes", "20192007043","SI");
-		Proprietario moto = new Proprietario("Motô do Dominó","n/a","n/a");
-		Proprietario netto = new Proprietario("Onildo", "n/a","n/a");
-		
-		Veiculo v1 = new Veiculo(iria,"QFX-9310", "HB-20", "CARRO");
+		// RELATORIO (para testes)
+		Proprietario iria = new Proprietario("Iria Guazzi", "20192007043", "SI");
+		Proprietario roberts = new Proprietario("Roberto Mendes", "20192007043", "SI");
+		Proprietario moto = new Proprietario("Motô do Dominó", "n/a", "n/a");
+		Proprietario netto = new Proprietario("Onildo", "n/a", "n/a");
+
+		Veiculo v1 = new Veiculo(iria, "QFX-9310", "HB-20", "CARRO");
 		Veiculo v2 = new Veiculo(netto, "OFH-8830", "Ford KA", "CARRO");
 		Veiculo v3 = new Veiculo(moto, "OZZ-3333", "Mercedez - Van", "VAN");
 		Veiculo v4 = new Veiculo(roberts, "QFX-9310", "HB-20", "CARRO");
@@ -90,6 +91,8 @@ public class TelaStatus extends JInternalFrame {
 		estacionamento.relatorioVeiculosEntradas(date, v7);
 		estacionamento.relatorioVeiculosEntradas(date, v8);
 
+		//fim testes
+		
 		setBorder(null);
 		getContentPane().setBackground(new Color(43, 52, 61));
 		setBounds(90, 10, 800, 520);
@@ -122,15 +125,6 @@ public class TelaStatus extends JInternalFrame {
 		lblData.setText(fmt.format(dataf));
 		panelConsultar.add(lblData);
 
-		JButton btnFechar = new JButton("Fechar");
-		btnFechar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		btnFechar.setIcon(new ImageIcon(TelaStatus.class.getResource("/images/close.png")));
-		btnFechar.setBounds(686, 232, 104, 41);
-		panelGerenciar.add(btnFechar);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBackground(Color.WHITE);
@@ -154,6 +148,7 @@ public class TelaStatus extends JInternalFrame {
 		comboBoxCateg.setBounds(130, 89, 268, 30);
 		panelConsultar.add(comboBoxCateg);
 		comboBoxCateg.addItem("");
+
 		// caso o gestor inclua nova área, essa já será inserida no combobox do veículo
 		for (String categoria : estacionamento.getCategorias()) {
 			comboBoxCateg.addItem(categoria);
@@ -201,6 +196,16 @@ public class TelaStatus extends JInternalFrame {
 		btnLimpar.setBounds(602, 89, 110, 30);
 		panelConsultar.add(btnLimpar);
 
+		JButton btnFechar = new JButton("Fechar");
+		btnFechar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnFechar.setIcon(new ImageIcon(TelaStatus.class.getResource("/images/close.png")));
+		btnFechar.setBounds(686, 232, 104, 41);
+		panelGerenciar.add(btnFechar);
+		
 		getContentPane().setLayout(groupLayout);
 
 	}

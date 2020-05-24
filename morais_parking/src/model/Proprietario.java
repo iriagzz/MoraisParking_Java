@@ -1,13 +1,13 @@
 package model;
 
 public class Proprietario {
-	
+
 	private String nome;
 	private String matricula;
 	private String curso;
-	
+
 	public Proprietario() {
-		
+
 	}
 
 	public Proprietario(String nome, String matricula, String curso) {
@@ -39,17 +39,13 @@ public class Proprietario {
 	public void setCurso(String curso) {
 		this.curso = curso;
 	}
-	
-	// Methodo
-		public String toString() {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Nome: " + this.nome + "\n");
-			sb.append("Matrícula: " + this.matricula + "\n");
-			sb.append("Curso: " + this.curso);
-			return sb.toString();
-		}
-	
-	
-	
 
+	// Methods
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Nome: " + this.nome + "\n");
+		sb.append("Matrícula: " + this.matricula + "\n");
+		sb.append("Curso: " + this.curso);
+		return sb.toString();
+	}
 }

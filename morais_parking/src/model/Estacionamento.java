@@ -17,10 +17,12 @@ public class Estacionamento {
 	List<Relatorios> relatorioStatus = new ArrayList<>();
 	List<Usuario> cadastroUsuario = new ArrayList<>();
 	List<Eventos> controleEventos = new ArrayList<Eventos>();
+	List<Funcionario> cadastroFuncionario = new ArrayList<>();
+	String[] tipoOcorrencia = { "Batida", "Furto/Assalto", "Estacionamento Indevido", "Inundação", "Danos ao Veículo",
+			"Outros" };
 
-	// Constructors
+	// Constructor
 	public Estacionamento() {
-
 	}
 
 	// Getters and Setters
@@ -56,10 +58,19 @@ public class Estacionamento {
 		return controleEventos;
 	}
 
-	// Metodos
+	public String[] getTipoOcorrencia() {
+		return tipoOcorrencia;
+	}
+
+	public List<Funcionario> getCadastroFuncionario() {
+		return cadastroFuncionario;
+	}
+
+	// Methods
 
 	// Veiculos
-	public void cadastrarVeiculo(String nome, String matricula, String curso, String placa, String modelo, String categoria) {
+	public void cadastrarVeiculo(String nome, String matricula, String curso, String placa, String modelo,
+			String categoria) {
 		Proprietario proprietario = new Proprietario(nome, matricula, curso);
 		Veiculo veiculo = new Veiculo(proprietario, placa, modelo, categoria);
 		this.cadastroVeiculos.add(veiculo);
@@ -109,7 +120,7 @@ public class Estacionamento {
 
 	public int ocupacaoAreas(String categoria) {
 		int percent = 0;
-		for (Areas area : controleAreas) {
+		for (Areas area : this.controleAreas) {
 			if (categoria.equals(area.getCategoria())) {
 				int quantidade = area.getVeiculos().size();
 				percent = (quantidade * 100 / area.getCapacidade());
@@ -118,17 +129,17 @@ public class Estacionamento {
 		return percent;
 	}
 
-
+	// Ocorrências
 	public void cadastrarOcorrencia(Integer id, String tipo, Integer quantidadeVeiculos, LocalDate data, String hora,
 			String fatos) {
 		Ocorrencias ocorrencia = new Ocorrencias(id, tipo, quantidadeVeiculos, data, hora, fatos);
 		this.cadastroOcorrencias.add(ocorrencia);
 		for (int i = 0; i < quantidadeVeiculos; i++) {
-			String placa = JOptionPane.showInputDialog(null, "Insira a placa da Ocorrencia: ");
+			String placa = JOptionPane.showInputDialog(null, "Insira a placa do Veículo: ");
 			Veiculo veiculo = validarVeiculo(placa);
 			if (veiculo != null) {
 				ocorrencia.adicionarVeiculo(veiculo);
-			}else {
+			} else {
 				JOptionPane.showMessageDialog(null, "Veículo não cadastrado");
 			}
 		}
@@ -148,16 +159,62 @@ public class Estacionamento {
 		this.relatorioEntradas.add(relatVeiculos);
 	}
 
+	// Funcionarios
+	public void cadastrarFuncionario(String nome, String cpf, String setor, String funcao, String placa) {
+		Funcionario funcionario = new Funcionario(nome, cpf, setor, funcao, placa);
+		this.cadastroFuncionario.add(funcionario);
+	}
+
+	public Funcionario consultarFuncionario(String cpf) {
+		for (Funcionario funcionario : this.cadastroFuncionario) {
+			if (funcionario.getCpf().equals(String.valueOf(cpf))) {
+				return funcionario;
+			}
+		}
+		return null;
+	}
+
 	// Usuarios
-	public void cadastrarUsuario(String funçao, String usuario, String senha, String nome, String cpf, String setor) {
-		Usuario funcionario = new Usuario(funçao, usuario, senha, nome, cpf, setor);
-		this.cadastroUsuario.add(funcionario);
+	public void cadastrarUsuario(String nome, String cpf, String matricula,String setor, String funcao, String usuario,
+			String senha) {
+		Usuario user = new Usuario(nome, cpf, matricula, setor, funcao, usuario, senha);
+		this.cadastroUsuario.add(user);
 	}
 
 	public Usuario validarUsuario(String usuario) {
 		for (Usuario user : this.cadastroUsuario) {
 			if (usuario.equals(user.getUsuario())) {
 				return user;
+			}
+		}
+		return null;
+	}
+	
+	public void removerUsuario(Usuario user) {
+		this.cadastroUsuario.remove(user);
+	}
+
+	public Usuario validarMatricula(String matricula) {
+		for (Usuario user : this.cadastroUsuario) {
+			if (matricula.equals(user.getMatricula())) {
+				return user;
+			}
+		}
+		return null;
+	}
+
+	public void editarFuncao(String matricula, String funcao) {
+		for (Usuario user : this.cadastroUsuario) {
+			if (matricula.equals(user.getMatricula())) {
+				user.setFuncao(funcao);
+			}
+		}
+	}
+
+	public String retornarFuncao(String usuario) {
+		for (Usuario user : this.cadastroUsuario) {
+			if (usuario.equals(user.getUsuario())) {
+				return user.getFuncao();
 			}
 		}
 		return null;

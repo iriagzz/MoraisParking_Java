@@ -6,31 +6,34 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
 
 import model.Estacionamento;
 import model.Memoria;
 import model.Veiculo;
-import javax.swing.JEditorPane;
 
 public class TelaVeiculos extends JInternalFrame {
 	private Memoria memoria = new Memoria();
 	private Estacionamento estacionamento = memoria.getEstacionamento();
 	private JTextField textProprietario;
-	private JTextField textPlacaCad;
+	private JFormattedTextField textPlacaCad;
 	private JTextField textModelo;
 	private JTextField textMatricula;
 	private JTextField textCurso;
@@ -54,9 +57,9 @@ public class TelaVeiculos extends JInternalFrame {
 
 	public TelaVeiculos() {
 		// VEICULOS
-		estacionamento.cadastrarVeiculo("Iria Guazzi","20192007043","SI", "QFX-9310", "HB-20", "CARRO");
-		estacionamento.cadastrarVeiculo("Roberto Mendes","20192007007","SI", "OXX-4455", "Ford K", "PREFERENCIAL");
-		estacionamento.cadastrarVeiculo("Motô do Dominó","n/a","n/a", "OZZ-3333", "Mercedez - Van", "VAN");
+		estacionamento.cadastrarVeiculo("Iria Guazzi", "20192007043", "SI", "QFX-9310", "HB-20", "CARRO");
+		estacionamento.cadastrarVeiculo("Roberto Mendes", "20192007007", "SI", "OXX-4455", "Ford K", "PREFERENCIAL");
+		estacionamento.cadastrarVeiculo("Motô do Dominó", "n/a", "n/a", "OZZ-3333", "Mercedez - Van", "VAN");
 		estacionamento.cadastrarVeiculo("Onildo", "n/a", "n/a", "OFH-8830", "Ford KA", "CARRO");
 
 		// AREAS
@@ -65,6 +68,16 @@ public class TelaVeiculos extends JInternalFrame {
 		estacionamento.cadastrarArea("Preferencial", 3, "PREFERENCIAL");
 		estacionamento.cadastrarArea("Motocicletas", 3, "MOTO");
 		estacionamento.cadastrarArea("Ônibus", 3, "ONIBUS");
+		
+		// Definir Máscaras
+		MaskFormatter mascaraPlaca = null;
+
+		try {
+			mascaraPlaca = new MaskFormatter("UUU-####");
+
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null, "Erro");
+		}
 
 		setBorder(null);
 		getContentPane().setBackground(new Color(43, 52, 61));
@@ -77,21 +90,15 @@ public class TelaVeiculos extends JInternalFrame {
 		JPanel panelGerenciar = new JPanel();
 		panelGerenciar.setBackground(SystemColor.activeCaption);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addComponent(panelConsultar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addComponent(panelGerenciar, GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(panelGerenciar, GroupLayout.PREFERRED_SIZE, 798, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(34, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(panelConsultar, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(panelGerenciar, GroupLayout.PREFERRED_SIZE, 306, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
+						.addComponent(panelConsultar, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
+						.addGap(27)
+						.addComponent(panelGerenciar, GroupLayout.PREFERRED_SIZE, 286, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap()));
 		panelGerenciar.setLayout(null);
 
 		JLabel lblTitular = new JLabel("Propriet\u00E1rio:");
@@ -111,7 +118,7 @@ public class TelaVeiculos extends JInternalFrame {
 		lblPlacaCad.setBounds(10, 148, 110, 30);
 		panelGerenciar.add(lblPlacaCad);
 
-		textPlacaCad = new JTextField();
+		textPlacaCad = new JFormattedTextField(mascaraPlaca);
 		textPlacaCad.setToolTipText("");
 		textPlacaCad.setBounds(130, 148, 268, 30);
 		panelGerenciar.add(textPlacaCad);
@@ -143,15 +150,7 @@ public class TelaVeiculos extends JInternalFrame {
 		comboBoxCateg.setBounds(130, 230, 268, 30);
 		panelGerenciar.add(comboBoxCateg);
 
-		JButton btnFechar = new JButton("Fechar");
-		btnFechar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		btnFechar.setIcon(new ImageIcon(TelaVeiculos.class.getResource("/images/close.png")));
-		btnFechar.setBounds(686, 232, 104, 41);
-		panelGerenciar.add(btnFechar);
+		
 
 		JButton btnCadastrarVeiculo = new JButton("Cadastrar Ve\u00EDculo");
 		btnCadastrarVeiculo.setBounds(537, 120, 168, 44);
@@ -159,8 +158,9 @@ public class TelaVeiculos extends JInternalFrame {
 		btnCadastrarVeiculo.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				estacionamento.cadastrarVeiculo(textProprietario.getText(), textMatricula.getText(), textCurso.getText(),  textPlacaCad.getText(),
-						textModelo.getText(), comboBoxCateg.getSelectedItem().toString());
+				estacionamento.cadastrarVeiculo(textProprietario.getText(), textMatricula.getText(),
+						textCurso.getText(), textPlacaCad.getText(), textModelo.getText(),
+						comboBoxCateg.getSelectedItem().toString());
 				textProprietario.setText("");
 				textPlacaCad.setText("");
 				textModelo.setText("");
@@ -168,33 +168,35 @@ public class TelaVeiculos extends JInternalFrame {
 		});
 
 		btnCadastrarVeiculo.setIcon(new ImageIcon(TelaVeiculos.class.getResource("/images/add.png")));
-		
+
 		JLabel lblMatricula = new JLabel("Matr\u00EDcula");
 		lblMatricula.setForeground(new Color(43, 52, 61));
 		lblMatricula.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblMatricula.setBounds(10, 66, 110, 30);
 		panelGerenciar.add(lblMatricula);
-		
+
 		textMatricula = new JTextField();
 		textMatricula.setToolTipText("");
 		textMatricula.setBounds(130, 66, 268, 30);
 		panelGerenciar.add(textMatricula);
-		
+
 		JLabel lblCurso = new JLabel("Curso:");
 		lblCurso.setForeground(new Color(43, 52, 61));
 		lblCurso.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblCurso.setBounds(10, 107, 110, 30);
 		panelGerenciar.add(lblCurso);
-		
+
 		textCurso = new JTextField();
 		textCurso.setToolTipText("");
 		textCurso.setBounds(130, 107, 268, 30);
 		panelGerenciar.add(textCurso);
-		
+
 		JEditorPane dtrpnCasoOProprietrio = new JEditorPane();
+		dtrpnCasoOProprietrio.setEditable(false);
 		dtrpnCasoOProprietrio.setBackground(SystemColor.activeCaption);
-		dtrpnCasoOProprietrio.setText("Caso o Propriet\u00E1rio n\u00E3o seja aluno ou esteja vinculado a algum aluno, n\u00E3o preencher os campos \"Matr\u00EDcula\" e \"Curso\".");
-		dtrpnCasoOProprietrio.setBounds(481, 25, 291, 55);
+		dtrpnCasoOProprietrio.setText(
+				"Caso o Propriet\u00E1rio n\u00E3o seja aluno ou n\u00E3o esteja vinculado a algum aluno, n\u00E3o preencher os campos \"Matr\u00EDcula\" e \"Curso\".");
+		dtrpnCasoOProprietrio.setBounds(453, 25, 319, 55);
 		panelGerenciar.add(dtrpnCasoOProprietrio);
 		panelConsultar.setLayout(null);
 
@@ -210,7 +212,7 @@ public class TelaVeiculos extends JInternalFrame {
 		lblPlaca.setBounds(10, 59, 48, 37);
 		panelConsultar.add(lblPlaca);
 
-		JTextField textPlaca = new JTextField();
+		JFormattedTextField textPlaca = new JFormattedTextField(mascaraPlaca);
 		textPlaca.setToolTipText("");
 		textPlaca.setBounds(54, 64, 129, 30);
 		panelConsultar.add(textPlaca);
@@ -235,7 +237,7 @@ public class TelaVeiculos extends JInternalFrame {
 				}
 			}
 		});
-		btnBuscar.setBounds(64, 105, 109, 23);
+		btnBuscar.setBounds(64, 105, 109, 25);
 		panelConsultar.add(btnBuscar);
 
 		JButton btnLimpar = new JButton("Limpar");
@@ -246,7 +248,7 @@ public class TelaVeiculos extends JInternalFrame {
 				textResulBusca.setText("");
 			}
 		});
-		btnLimpar.setBounds(64, 139, 109, 23);
+		btnLimpar.setBounds(64, 139, 109, 25);
 		panelConsultar.add(btnLimpar);
 
 		JButton btnRemoverVeiculo = new JButton("Remover Ve\u00EDculo");
@@ -268,6 +270,16 @@ public class TelaVeiculos extends JInternalFrame {
 		btnRemoverVeiculo.setBounds(532, 72, 168, 44);
 		panelConsultar.add(btnRemoverVeiculo);
 		getContentPane().setLayout(groupLayout);
+		
+		JButton btnFechar = new JButton("Fechar");
+		btnFechar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnFechar.setIcon(new ImageIcon(TelaVeiculos.class.getResource("/images/close.png")));
+		btnFechar.setBounds(686, 234, 104, 41);
+		panelGerenciar.add(btnFechar);
 
 	}
 }

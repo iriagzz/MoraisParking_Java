@@ -1,31 +1,31 @@
 package model;
 
-public class Usuario {
+public class Usuario extends Pessoa {
 	// Attributes
-	private String funçao;
+
 	private String usuario;
 	private String senha;
-	private String nome;
-	private String cpf;
-	private String setor;
 
 	// Constructor
-	public Usuario(String funçao, String usuario, String senha, String nome, String cpf, String setor) {
-		this.funçao = funçao;
+	public Usuario() {
+		super();
+	}
+
+	public Usuario(String nome, String cpf, String matricula, String setor, String funcao, String usuario,
+			String senha) {
+		super(nome, cpf, matricula, setor, funcao);
 		this.usuario = usuario;
 		this.senha = senha;
-		this.nome = nome;
-		this.cpf = cpf;
-		this.setor = setor;
 	}
 
-	// Gets & Sets
-	public String getFunçao() {
-		return funçao;
+	
+	//Getters and Setters
+	public String getMatricula() {
+		return matricula;
 	}
 
-	public void setFunçao(String funçao) {
-		this.funçao = funçao;
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
 	}
 
 	public String getUsuario() {
@@ -44,38 +44,15 @@ public class Usuario {
 		this.senha = senha;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public String getSetor() {
-		return setor;
-	}
-
-	public void setSetor(String setor) {
-		this.setor = setor;
-	}
-
 	// Methods
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Usuário: " + usuario + " || ");
-		sb.append("Senha: " + senha + " || ");
-		sb.append("Nome: " + nome + "||");
-		sb.append("CPF: " + cpf + "||");
-		sb.append("Setor: " + setor + "||");
+		sb.append("Nome: " + nome + "\n");
+		sb.append("CPF: " + cpf + "\n");
+		sb.append("Matrícula: " + matricula + "\n");
+		sb.append("Permissão: " + funcao + "\n");
+		sb.append("Setor: " + setor + "\n");
+		sb.append("Usuário: " + this.usuario + "\n");
 		return sb.toString();
 	}
 }

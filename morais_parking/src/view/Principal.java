@@ -10,7 +10,6 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -29,6 +28,8 @@ import model.Estacionamento;
 import model.Memoria;
 
 public class Principal extends javax.swing.JFrame {
+	private Memoria memoria = new Memoria();
+	private Estacionamento estacionamento = memoria.getEstacionamento();
 
 	/**
 	 * Launch the application.
@@ -36,9 +37,11 @@ public class Principal extends javax.swing.JFrame {
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable() {
+			private String funcao;
+
 			public void run() {
 				try {
-					Principal frame = new Principal();
+					Principal frame = new Principal(funcao);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +54,7 @@ public class Principal extends javax.swing.JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Principal() {
+	public Principal(String funcao) {
 
 		getContentPane().setBackground(SystemColor.window);
 		getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
@@ -71,7 +74,7 @@ public class Principal extends javax.swing.JFrame {
 		lblSystem.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSystem.setForeground(SystemColor.activeCaption);
 		lblSystem.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblSystem.setBounds(599, 92, 319, 64);
+		lblSystem.setBounds(599, 168, 319, 64);
 		desktopPane.add(lblSystem);
 
 		// Data e Hora
@@ -80,9 +83,9 @@ public class Principal extends javax.swing.JFrame {
 		lblTime.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTime.setForeground(SystemColor.activeCaption);
 		lblTime.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTime.setBounds(599, 177, 319, 64);
+		lblTime.setBounds(599, 253, 319, 64);
 		desktopPane.add(lblTime);
-		
+
 		// para que a hora fique atualizando
 		ActionListener updateClockAction = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -93,18 +96,18 @@ public class Principal extends javax.swing.JFrame {
 		Timer t = new Timer(100, updateClockAction);
 		t.start();
 
-		// Abre a tela de Login (todos os botoes estarão desativados atens do login)
-		JButton btnAcesso = new JButton("Acessar o Sistema");
-		btnAcesso.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				TelaLogin tela = new TelaLogin();
-				desktopPane.add(tela);
-				tela.setVisible(true);
-			}
-		});
-		btnAcesso.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnAcesso.setBounds(643, 319, 231, 56);
-		desktopPane.add(btnAcesso);
+		JLabel labelUsuario = new JLabel("New label");
+		labelUsuario.setFont(new Font("Tahoma", Font.BOLD, 11));
+		labelUsuario.setForeground(Color.WHITE);
+		labelUsuario.setBounds(689, 520, 195, 14);
+		desktopPane.add(labelUsuario);
+		labelUsuario.setText(funcao);
+
+		JLabel lblPermissoDeAcesso = new JLabel("Permiss\u00E3o de Acesso:");
+		lblPermissoDeAcesso.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblPermissoDeAcesso.setForeground(Color.WHITE);
+		lblPermissoDeAcesso.setBounds(553, 520, 163, 14);
+		desktopPane.add(lblPermissoDeAcesso);
 
 		setVisible(true);
 		setMaximumSize(new Dimension(0, 0));
@@ -118,11 +121,18 @@ public class Principal extends javax.swing.JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
+		// Botão Estacionamento
 		JMenu mnEstacionamento = new JMenu("Estacionamento");
 		mnEstacionamento.setIcon(new ImageIcon(Principal.class.getResource("/images/parking.png")));
 		mnEstacionamento.setMnemonic('E');
 		mnEstacionamento.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menuBar.add(mnEstacionamento);
+		// permissão de acesso
+		if (funcao.equalsIgnoreCase("Funcionario RH")) {
+			mnEstacionamento.setEnabled(false);
+		} else {
+			mnEstacionamento.setEnabled(true);
+		}
 
 		// Abre a tela Veículos
 		JMenuItem mntmVeiculos = new JMenuItem("Ve\u00EDculos");
@@ -133,7 +143,6 @@ public class Principal extends javax.swing.JFrame {
 				tela.setVisible(true);
 			}
 		});
-
 		mntmVeiculos.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnEstacionamento.add(mntmVeiculos);
 
@@ -161,31 +170,76 @@ public class Principal extends javax.swing.JFrame {
 		mntmStatus.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnEstacionamento.add(mntmStatus);
 
+		// Botão Eventos
 		JMenu mnEventos = new JMenu("Eventos");
 		mnEventos.setIcon(new ImageIcon(Principal.class.getResource("/images/events.png")));
 		mnEventos.setMnemonic('V');
 		mnEventos.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menuBar.add(mnEventos);
+		// permissão de acesso
+		if (funcao.equalsIgnoreCase("Funcionario RH")) {
+			mnEventos.setEnabled(false);
+		} else {
+			mnEventos.setEnabled(true);
+		}
 
-		JMenuItem mntmGerenciarEventos = new JMenuItem("Gerenciar Eventos");
+		//Abre a tela Eventos
+		JMenuItem mntmGerenciarEventos = new JMenuItem("Cadastrar");
+		mntmGerenciarEventos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				TelaEventos tela = new TelaEventos();
+				desktopPane.add(tela);
+				tela.setVisible(true);
+			}
+		});
 		mntmGerenciarEventos.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnEventos.add(mntmGerenciarEventos);
 
+		JMenuItem mntmConsultarEvento = new JMenuItem("Consultar");
+		mntmConsultarEvento.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mnEventos.add(mntmConsultarEvento);
+
+		// Botão Ocorrências
 		JMenu mnOcorrencias = new JMenu("Ocorr\u00EAncias");
 		mnOcorrencias.setIcon(new ImageIcon(Principal.class.getResource("/images/crash.png")));
 		mnOcorrencias.setMnemonic('O');
 		mnOcorrencias.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menuBar.add(mnOcorrencias);
-
-		JMenuItem mntmGerenciarOcorrncias = new JMenuItem("Gerenciar Ocorr\u00EAncias");
+		// permissão de acesso
+		if (funcao.equalsIgnoreCase("Funcionario RH")) {
+			mnOcorrencias.setEnabled(false);
+		} else {
+			mnOcorrencias.setEnabled(true);
+		}
+		//Abrir tela Ocorrencias
+		JMenuItem mntmGerenciarOcorrncias = new JMenuItem("Cadastrar");
+		mntmGerenciarOcorrncias.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				TelaOcorrencias tela = new TelaOcorrencias();
+				desktopPane.add(tela);
+				tela.setVisible(true);
+			}
+		});
 		mntmGerenciarOcorrncias.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnOcorrencias.add(mntmGerenciarOcorrncias);
 
+		
+		JMenuItem mntmConsultar = new JMenuItem("Consultar");
+		mntmConsultar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mnOcorrencias.add(mntmConsultar);
+
+		//Botão Relatórios
 		JMenu mnRelatorios = new JMenu("Relat\u00F3rios");
 		mnRelatorios.setIcon(new ImageIcon(Principal.class.getResource("/images/reports.png")));
 		mnRelatorios.setMnemonic('R');
 		mnRelatorios.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menuBar.add(mnRelatorios);
+		//Permissao de Acesso
+		if (funcao.equalsIgnoreCase("gestor")) {
+			mnRelatorios.setEnabled(true);
+		} else {
+			mnRelatorios.setEnabled(false);
+		}
 
 		JMenu mnGerarRelatorios = new JMenu("Gerar Relat\u00F3rios");
 		mnGerarRelatorios.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -203,12 +257,19 @@ public class Principal extends javax.swing.JFrame {
 		mntmOcorrencias.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnGerarRelatorios.add(mntmOcorrencias);
 
+		// BotãoGestor
 		JMenu mnGestor = new JMenu("Gestor");
 		mnGestor.setIcon(new ImageIcon(Principal.class.getResource("/images/manager.png")));
 		mnGestor.setMnemonic('G');
 		mnGestor.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnGestor.setBackground(Color.DARK_GRAY);
 		menuBar.add(mnGestor);
+		//Permissão de acesso
+		if (funcao.equalsIgnoreCase("gestor")) {
+			mnGestor.setEnabled(true);
+		} else {
+			mnGestor.setEnabled(false);
+		}
 
 		JMenuItem mntmPermissoesAcesso = new JMenuItem("Permiss\u00F5es Acesso");
 		mntmPermissoesAcesso.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -220,14 +281,45 @@ public class Principal extends javax.swing.JFrame {
 		JMenuItem mntmareas = new JMenuItem("\u00C1reas do Estacionamento");
 		mntmareas.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnGestor.add(mntmareas);
+		
+		JSeparator separator_1 = new JSeparator();
+		mnGestor.add(separator_1);
+		
+		JMenuItem mntmCadastroDeUsurios = new JMenuItem("Cadastro de Usu\u00E1rios");
+		mntmCadastroDeUsurios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				TelaUsuario tela = new TelaUsuario();
+				desktopPane.add(tela);
+				tela.setVisible(true);	
+			}
+		});
+		mntmCadastroDeUsurios.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mnGestor.add(mntmCadastroDeUsurios);
+
+		// Botão RH
+		JMenu mnRh = new JMenu("RH");
+		mnRh.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mnRh.setIcon(new ImageIcon(Principal.class.getResource("/images/profile.png")));
+		mnRh.setMnemonic('h');
+		menuBar.add(mnRh);
+		// permissão de acesso
+		if (funcao.equalsIgnoreCase("Funcionario RH")) {
+			mnRh.setEnabled(true);
+		} else {
+			mnRh.setEnabled(false);
+		}
+
+		//Abrir tela Cadastrar Funcionario
+		JMenuItem mntmCads = new JMenuItem("Cadastrar Funicion\u00E1rio");
+		mntmCads.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mntmCads.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaFuncionario tela = new TelaFuncionario();
+				desktopPane.add(tela);
+				tela.setVisible(true);
+			}
+		});
+		mnRh.add(mntmCads);
 		setTitle("Morais' Parking System");
 	}
 }
-
-//metodo habilita botao
-/*
- * public void habilitaBotoes(boolean estado){ if metodoLogin() --> que deve
- * retornar um logins == "func ou gest ou funrh" botao.setEnabled(estado)
- *
- * }
- */

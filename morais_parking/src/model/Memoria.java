@@ -1,4 +1,5 @@
 package model;
+//teste de inicialização dos dados. não funcionou. vamos tentar usar Java IO ou NIO
 
 public class Memoria {
 
