@@ -52,15 +52,7 @@ public class TelaEventos extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public TelaEventos() {
-
-		Estacionamento estacionamento = new Estacionamento();
-
-		// AREAS
-		estacionamento.cadastrarArea("Carros", 5, "CARRO");
-		estacionamento.cadastrarArea("Vans", 2, "VAN");
-		estacionamento.cadastrarArea("Preferencial", 3, "PREFERENCIAL");
-		estacionamento.cadastrarArea("Motocicletas", 3, "MOTO");
-		estacionamento.cadastrarArea("Ônibus", 3, "ONIBUS");
+		Estacionamento estacionamento = Estacionamento.getInstancia();
 
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -101,21 +93,10 @@ public class TelaEventos extends JInternalFrame {
 		});
 		scrollPane.setViewportView(tableCateg);
 
-		JButton btnFechar = new JButton("Fechar");
-		panelExibir.add(btnFechar);
-		btnFechar.setIcon(new ImageIcon(TelaStatus.class.getResource("/images/close.png")));
-		btnFechar.setBounds(686, 188, 104, 41);
-
 		JButton btnCadastrar = new JButton("Cadastrar Evento");
 		btnCadastrar.setBounds(547, 95, 161, 44);
 		panelExibir.add(btnCadastrar);
-		btnCadastrar.setIcon(new ImageIcon(TelaEventos.class.getResource("/images/add.png")));
-
-		btnFechar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
+		btnCadastrar.setIcon(new ImageIcon(TelaEventos.class.getResource("../images/add.png")));
 
 		JPanel panelCadastrar = new JPanel();
 		panelCadastrar.setBackground(SystemColor.inactiveCaption);
@@ -207,7 +188,6 @@ public class TelaEventos extends JInternalFrame {
 		labelQtdVagas.setFont(new Font("Tahoma", Font.BOLD, 14));
 		labelQtdVagas.setBounds(563, 121, 70, 17);
 		panelCadastrar.add(labelQtdVagas);
-		
 
 		// ação do botão cadastrar
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -221,6 +201,16 @@ public class TelaEventos extends JInternalFrame {
 				textDuracao.setText("");
 				textVagas.setText("");
 				tableCateg.setModel(new DefaultTableModel(null, new String[] { "Categoria", "Vagas" }));
+			}
+		});
+
+		JButton btnFechar = new JButton("Fechar");
+		panelExibir.add(btnFechar);
+		btnFechar.setIcon(new ImageIcon(TelaStatus.class.getResource("../images/close.png")));
+		btnFechar.setBounds(686, 188, 104, 41);
+		btnFechar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
 		});
 

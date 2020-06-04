@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,20 +10,29 @@ import javax.swing.JOptionPane;
 public class Estacionamento {
 
 	// Attributes
-	List<Areas> controleAreas = new ArrayList<>();
-	List<Veiculo> cadastroVeiculos = new ArrayList<>();
-	List<Ocorrencias> cadastroOcorrencias = new ArrayList<>();
-	List<String> categorias = new ArrayList<>();
-	List<Relatorios> relatorioEntradas = new ArrayList<>();
-	List<Relatorios> relatorioStatus = new ArrayList<>();
-	List<Usuario> cadastroUsuario = new ArrayList<>();
-	List<Eventos> controleEventos = new ArrayList<Eventos>();
-	List<Funcionario> cadastroFuncionario = new ArrayList<>();
-	String[] tipoOcorrencia = { "Batida", "Furto/Assalto", "Estacionamento Indevido", "Inundação", "Danos ao Veículo",
-			"Outros" };
+	private List<Areas> controleAreas = new ArrayList<>();
+	private List<Veiculo> cadastroVeiculos = new ArrayList<>();
+	private List<Ocorrencias> cadastroOcorrencias = new ArrayList<>();
+	private List<String> categorias = new ArrayList<>();
+	private List<Relatorios> relatorioEntradas = new ArrayList<>();
+	private List<Veiculo> relatorioStatus = new ArrayList<>();
+	private List<Usuario> cadastroUsuario = new ArrayList<>();
+	private List<Eventos> controleEventos = new ArrayList<Eventos>();
+	private List<Funcionario> cadastroFuncionario = new ArrayList<>();
+	private String[] tipoOcorrencia = { "Batida", "Furto/Assalto", "Estacionamento Indevido", "Inundação",
+			"Danos ao Veículo", "Outros" };
 
 	// Constructor
-	public Estacionamento() {
+	private Estacionamento() {
+	}
+
+	private static Estacionamento instancia = null;
+
+	public static Estacionamento getInstancia() {
+		if (instancia == null) {
+			instancia = new Estacionamento();
+		}
+		return instancia;
 	}
 
 	// Getters and Setters
@@ -46,7 +56,7 @@ public class Estacionamento {
 		return relatorioEntradas;
 	}
 
-	public List<Relatorios> getRelatorioStatus() {
+	public List<Veiculo> getRelatorioStatus() {
 		return relatorioStatus;
 	}
 
@@ -95,6 +105,7 @@ public class Estacionamento {
 			for (Areas area : controleAreas) {
 				if (area.getCategoria() == veic.getCategoria()) {
 					area.entradaVeiculo(veic);
+					this.relatorioStatus.add(veic);
 				}
 			}
 		}
@@ -102,13 +113,19 @@ public class Estacionamento {
 
 	public void validarSaida(String placa) {
 		Veiculo veic = this.validarVeiculo(placa);
-		for (Areas area : controleAreas) {
-			if (area.getCategoria() == veic.getCategoria()) {
-				area.saidaVeiculo(veic);
-			} else {
-				System.out.println("Entrada não registrada"); // tenho que fazer essa condição na interface? ou posso
+		if (veic != null) {
+			if (this.relatorioStatus.contains(veic)) {
+				for (Areas area : controleAreas) {
+					if (area.getCategoria() == veic.getCategoria()) {
+						area.saidaVeiculo(veic);
+						this.relatorioStatus.remove(veic);
+					}
+				}
 			}
+		}else {
+			veic = null;
 		}
+		
 	}
 
 	// Areas
@@ -117,6 +134,26 @@ public class Estacionamento {
 		this.controleAreas.add(area);
 		this.categorias.add(categoria);
 	}
+	
+	public Areas consultarArea(String categoria) {
+		for (Areas area : this.controleAreas) {
+			if(categoria.equals(area.getCategoria())) {
+				return area;
+			}
+		}
+		return null;
+	}
+	
+	public void removerArea(String categoria) {
+		Areas area = this.consultarArea(categoria); 
+		if (area != null) {
+			this.categorias.remove(categoria);
+			this.controleAreas.remove(area);
+		}else {
+			JOptionPane.showMessageDialog(null, "Área não cadastrada!");
+		}
+	}
+		
 
 	public int ocupacaoAreas(String categoria) {
 		int percent = 0;
@@ -175,7 +212,7 @@ public class Estacionamento {
 	}
 
 	// Usuarios
-	public void cadastrarUsuario(String nome, String cpf, String matricula,String setor, String funcao, String usuario,
+	public void cadastrarUsuario(String nome, String cpf, String matricula, String setor, String funcao, String usuario,
 			String senha) {
 		Usuario user = new Usuario(nome, cpf, matricula, setor, funcao, usuario, senha);
 		this.cadastroUsuario.add(user);
@@ -189,7 +226,7 @@ public class Estacionamento {
 		}
 		return null;
 	}
-	
+
 	public void removerUsuario(Usuario user) {
 		this.cadastroUsuario.remove(user);
 	}
@@ -232,4 +269,43 @@ public class Estacionamento {
 			return false;
 		}
 	}
+
+	// Memória
+	public void memoria() {
+
+		Estacionamento estacionamento = Estacionamento.getInstancia();
+		estacionamento.cadastrarUsuario("Arthur Lacet", "10973236418", "165a", "Setor Pessoal", "Funcionario RH",
+				"Arthur", "voltas28");
+		estacionamento.cadastrarUsuario("Lucelia Lacet", "10973236418", "16878a", "Estacionamento",
+				"Funcionario Estacionamento", "Lucelia", "voltas17");
+		estacionamento.cadastrarUsuario("Iria Guazzi", "10973236418", "13548t", "Estacionamento", "Gestor", "Iria",
+				"1234");
+
+		// VEICULOS
+		estacionamento.cadastrarVeiculo("Iria Guazzi", "20192007043", "SI", "CCC-1234", "HB-20", "CARRO");
+		estacionamento.cadastrarVeiculo("Roberto Mendes", "20192007043", "SI", "BBB-1234", "Ford K", "PREFERENCIAL");
+		estacionamento.cadastrarVeiculo("Motô do Dominó", "N/A", "N/A", "OZZ-3333", "Mercedez - Van", "VAN");
+		estacionamento.cadastrarVeiculo("Onildo", "N/A", "N/A", "AAA-1234", "Ford KA", "CARRO");
+		estacionamento.cadastrarVeiculo("Silvio Santos", "2015468s", "N/A", "JJJ-1234", "Ford KA", "CARRO");
+
+		// AREAS
+		estacionamento.cadastrarArea("Carros", 20, "CARRO");
+		estacionamento.cadastrarArea("Vans", 10, "VAN");
+		estacionamento.cadastrarArea("Preferencial", 10, "PREFERENCIAL");
+		estacionamento.cadastrarArea("Motocicletas", 20, "MOTO");
+		estacionamento.cadastrarArea("Ônibus", 10, "ONIBUS");
+
+		//OCORRENCIA
+		
+		
+		
+		// RELATORIO (para testes)
+
+		Proprietario moto = new Proprietario("Motô do Dominó", "n/a", "n/a");
+		Veiculo v3 = new Veiculo(moto, "OZZ-3333", "Mercedez - Van", "VAN");
+		LocalDate date = LocalDate.now();
+		estacionamento.relatorioVeiculosEntradas(date, v3);
+
+	}
+
 }

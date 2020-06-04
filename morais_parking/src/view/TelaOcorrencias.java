@@ -52,8 +52,7 @@ public class TelaOcorrencias extends JInternalFrame {
 	 */
 	public TelaOcorrencias() {
 
-		Estacionamento estacionamento = new Estacionamento();
-
+		Estacionamento estacionamento = Estacionamento.getInstancia();
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 		// Definir Máscaras
@@ -171,7 +170,7 @@ public class TelaOcorrencias extends JInternalFrame {
 		JButton btnCadastrarOcorrencia = new JButton("Cadastrar");
 		btnCadastrarOcorrencia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textID.setText("");
+				textID.setText(String.valueOf(estacionamento.getCadastroOcorrencias().size()+1));
 				comboBoxTipo.setSelectedItem("");
 				textNumeroDeVeiculos.setText("");
 				textData.setText("");

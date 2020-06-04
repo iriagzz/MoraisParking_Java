@@ -57,19 +57,9 @@ public class TelaUsuario extends JInternalFrame {
 	 */
 	public TelaUsuario() {
 
-		Estacionamento estacionamento = new Estacionamento();
+		Estacionamento estacionamento = Estacionamento.getInstancia();
 
-		// Testes
-
-		estacionamento.cadastrarUsuario("Arthur Lacet", "10973236418", "165a", "Setor Pessoal", "Funcionario RH",
-				"Arthur", "voltas28");
-		estacionamento.cadastrarUsuario("Lucelia Lacet", "10973236418", "16878a", "Estacionamento",
-				"Funcionario Estacionamento", "Lucelia", "voltas17");
-		estacionamento.cadastrarUsuario("Iria Guazzi", "10973236418", "13548t", "Estacionamento", "Gestor", "Iria",
-				"1234");
-
-		// Fim Testes
-
+		
 		// Definir Máscaras
 		MaskFormatter mascaraCpf = null;
 

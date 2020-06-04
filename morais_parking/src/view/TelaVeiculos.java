@@ -26,12 +26,11 @@ import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
 import model.Estacionamento;
-import model.Memoria;
+
 import model.Veiculo;
 
 public class TelaVeiculos extends JInternalFrame {
-	private Memoria memoria = new Memoria();
-	private Estacionamento estacionamento = memoria.getEstacionamento();
+
 	private JTextField textProprietario;
 	private JFormattedTextField textPlacaCad;
 	private JTextField textModelo;
@@ -39,8 +38,6 @@ public class TelaVeiculos extends JInternalFrame {
 	private JTextField textCurso;
 
 	public static void main(String[] args) {
-		Memoria memoria = new Memoria();
-		Estacionamento estacionamento = memoria.getEstacionamento();
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -56,19 +53,10 @@ public class TelaVeiculos extends JInternalFrame {
 	}
 
 	public TelaVeiculos() {
-		// VEICULOS
-		estacionamento.cadastrarVeiculo("Iria Guazzi", "20192007043", "SI", "QFX-9310", "HB-20", "CARRO");
-		estacionamento.cadastrarVeiculo("Roberto Mendes", "20192007007", "SI", "OXX-4455", "Ford K", "PREFERENCIAL");
-		estacionamento.cadastrarVeiculo("Motô do Dominó", "n/a", "n/a", "OZZ-3333", "Mercedez - Van", "VAN");
-		estacionamento.cadastrarVeiculo("Onildo", "n/a", "n/a", "OFH-8830", "Ford KA", "CARRO");
 
-		// AREAS
-		estacionamento.cadastrarArea("Carros", 5, "CARRO");
-		estacionamento.cadastrarArea("Vans", 2, "VAN");
-		estacionamento.cadastrarArea("Preferencial", 3, "PREFERENCIAL");
-		estacionamento.cadastrarArea("Motocicletas", 3, "MOTO");
-		estacionamento.cadastrarArea("Ônibus", 3, "ONIBUS");
+		Estacionamento estacionamento = Estacionamento.getInstancia();
 		
+
 		// Definir Máscaras
 		MaskFormatter mascaraPlaca = null;
 
@@ -150,8 +138,6 @@ public class TelaVeiculos extends JInternalFrame {
 		comboBoxCateg.setBounds(130, 230, 268, 30);
 		panelGerenciar.add(comboBoxCateg);
 
-		
-
 		JButton btnCadastrarVeiculo = new JButton("Cadastrar Ve\u00EDculo");
 		btnCadastrarVeiculo.setBounds(537, 120, 168, 44);
 		panelGerenciar.add(btnCadastrarVeiculo);
@@ -164,6 +150,10 @@ public class TelaVeiculos extends JInternalFrame {
 				textProprietario.setText("");
 				textPlacaCad.setText("");
 				textModelo.setText("");
+				textCurso.setText("");
+				textMatricula.setText("");
+				
+				
 			}
 		});
 
@@ -270,7 +260,7 @@ public class TelaVeiculos extends JInternalFrame {
 		btnRemoverVeiculo.setBounds(532, 72, 168, 44);
 		panelConsultar.add(btnRemoverVeiculo);
 		getContentPane().setLayout(groupLayout);
-		
+
 		JButton btnFechar = new JButton("Fechar");
 		btnFechar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

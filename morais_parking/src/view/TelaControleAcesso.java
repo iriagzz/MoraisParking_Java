@@ -29,16 +29,12 @@ import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
 import model.Estacionamento;
-import model.Memoria;
-import model.Relatorios;
+
 import model.Veiculo;
 
 public class TelaControleAcesso extends JInternalFrame {
 
-	private Memoria memoria = new Memoria();
-	private Estacionamento estacionamento = memoria.getEstacionamento();
-	Relatorios relatorio = memoria.getRelatorios();
-
+	
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable() {
@@ -51,23 +47,13 @@ public class TelaControleAcesso extends JInternalFrame {
 				}
 			}
 		});
+		
 	}
 
 	public TelaControleAcesso() {
+		Estacionamento estacionamento = Estacionamento.getInstancia();
+		
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-		// VEICULOS (para testes)
-		estacionamento.cadastrarVeiculo("Iria Guazzi", "20192007043", "SI", "QFX-9310", "HB-20", "CARRO");
-		estacionamento.cadastrarVeiculo("Roberto Mendes", "20192007043", "SI", "OXX-4455", "Ford K", "PREFERENCIAL");
-		estacionamento.cadastrarVeiculo("Motô do Dominó", "N/A", "N/A", "OZZ-3333", "Mercedez - Van", "VAN");
-		estacionamento.cadastrarVeiculo("Onildo", "N/A", "N/A", "OFH-8830", "Ford KA", "CARRO");
-
-		// AREAS (para testes)
-		estacionamento.cadastrarArea("Carros", 5, "CARRO");
-		estacionamento.cadastrarArea("Vans", 2, "VAN");
-		estacionamento.cadastrarArea("Preferencial", 3, "PREFERENCIAL");
-		estacionamento.cadastrarArea("Motocicletas", 3, "MOTO");
-		estacionamento.cadastrarArea("Ônibus", 3, "ONIBUS");
 
 		// Definir Máscaras
 		MaskFormatter mascaraPlaca = null;
@@ -192,23 +178,6 @@ public class TelaControleAcesso extends JInternalFrame {
 		textArea.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "\u00C1rea de Estacionamento",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(25, 25, 112)));
 
-		JButton btnVerificar = new JButton("Verificar");
-		btnVerificar.setBounds(294, 80, 89, 23);
-		getContentPane().setLayout(groupLayout);
-		panelConsultar.add(btnVerificar);
-		btnVerificar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Veiculo veiculo = estacionamento.validarVeiculo(textPlaca.getText());
-				if (veiculo != null) {
-					textResulBusca.setText(veiculo.toString());
-					comboBoxArea.setSelectedItem(veiculo.getCategoria());
-				} else {
-					textResulBusca.setText("Veículo não Localizado!");
-				}
-				textArea.setText(veiculo.getCategoria());
-			}
-		});
-
 		JButton btnRegistrarEntrada = new JButton("Registrar Entrada");
 		btnRegistrarEntrada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -229,7 +198,7 @@ public class TelaControleAcesso extends JInternalFrame {
 		JButton btnRegistrarSaida = new JButton("Registrar Sa\u00EDda");
 		btnRegistrarSaida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				estacionamento.validarSaida(textPlaca.getText());
+				estacionamento.validarSaida(textPlaca.getText()) ;
 				comboBoxArea.setSelectedItem(textArea.getText());
 				textPlaca.setText("");
 				textResulBusca.setText("");
@@ -241,6 +210,28 @@ public class TelaControleAcesso extends JInternalFrame {
 		btnRegistrarSaida.setIcon(new ImageIcon(TelaControleAcesso.class.getResource("/images/down-arrow.png")));
 		btnRegistrarSaida.setBounds(263, 134, 168, 44);
 		panelConsultar.add(btnRegistrarSaida);
+		
+		JButton btnVerificar = new JButton("Verificar");
+		btnVerificar.setBounds(294, 80, 89, 23);
+		getContentPane().setLayout(groupLayout);
+		panelConsultar.add(btnVerificar);
+		btnVerificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Veiculo veiculo = estacionamento.validarVeiculo(textPlaca.getText());
+				if (veiculo != null) {
+					btnRegistrarEntrada.setEnabled(true);
+					textResulBusca.setText(veiculo.toString());
+					comboBoxArea.setSelectedItem(veiculo.getCategoria());
+					textArea.setText(veiculo.getCategoria());
+				} else {
+					btnRegistrarEntrada.setEnabled(false);
+					textResulBusca.setText("Veículo não Localizado!");
+				}
+				
+			}
+		});
+
+	
 
 	}
 }

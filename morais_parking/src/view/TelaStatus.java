@@ -24,15 +24,11 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import model.Estacionamento;
-import model.Memoria;
 import model.Proprietario;
 import model.Relatorios;
 import model.Veiculo;
 
 public class TelaStatus extends JInternalFrame {
-	private Memoria memoria = new Memoria();
-	private Estacionamento estacionamento = memoria.getEstacionamento();
-	private Relatorios relatorio = memoria.getRelatorios();
 	private JTable tableRelStatus;
 
 	public static void main(String[] args) {
@@ -50,49 +46,8 @@ public class TelaStatus extends JInternalFrame {
 	}
 
 	public TelaStatus() {
+		Estacionamento estacionamento = Estacionamento.getInstancia();
 
-		//dados para testes
-		// VEICULOS (para testes)
-		estacionamento.cadastrarVeiculo("Iria Guazzi", "20192007043", "SI", "QFX-9310", "HB-20", "CARRO");
-		estacionamento.cadastrarVeiculo("Roberto Mendes", "20192007043", "SI", "OXX-4455", "Ford K", "PREFERENCIAL");
-		estacionamento.cadastrarVeiculo("Motô do Dominó", "n/a", "n/a", "OZZ-3333", "Mercedez - Van", "VAN");
-		estacionamento.cadastrarVeiculo("Onildo", "n/a", "n/a", "OFH-8830", "Ford KA", "CARRO");
-
-		// AREAS (para testes)
-		estacionamento.cadastrarArea("Carros", 5, "CARRO");
-		estacionamento.cadastrarArea("Vans", 2, "VAN");
-		estacionamento.cadastrarArea("Preferencial", 3, "PREFERENCIAL");
-		estacionamento.cadastrarArea("Motocicletas", 3, "MOTO");
-		estacionamento.cadastrarArea("Ônibus", 3, "ONIBUS");
-
-		// RELATORIO (para testes)
-		Proprietario iria = new Proprietario("Iria Guazzi", "20192007043", "SI");
-		Proprietario roberts = new Proprietario("Roberto Mendes", "20192007043", "SI");
-		Proprietario moto = new Proprietario("Motô do Dominó", "n/a", "n/a");
-		Proprietario netto = new Proprietario("Onildo", "n/a", "n/a");
-
-		Veiculo v1 = new Veiculo(iria, "QFX-9310", "HB-20", "CARRO");
-		Veiculo v2 = new Veiculo(netto, "OFH-8830", "Ford KA", "CARRO");
-		Veiculo v3 = new Veiculo(moto, "OZZ-3333", "Mercedez - Van", "VAN");
-		Veiculo v4 = new Veiculo(roberts, "QFX-9310", "HB-20", "CARRO");
-		Veiculo v5 = new Veiculo(iria, "OFH-8830", "Ford KA", "CARRO");
-		Veiculo v6 = new Veiculo(moto, "OZZ-3333", "Mercedez - Van", "VAN");
-		Veiculo v7 = new Veiculo(netto, "QFX-9310", "HB-20", "VAN");
-		Veiculo v8 = new Veiculo(roberts, "OFH-8830", "Ford KA", "CARRO");
-
-		LocalDate date = LocalDate.now();
-
-		estacionamento.relatorioVeiculosEntradas(date, v1);
-		estacionamento.relatorioVeiculosEntradas(date, v2);
-		estacionamento.relatorioVeiculosEntradas(date, v3);
-		estacionamento.relatorioVeiculosEntradas(date, v4);
-		estacionamento.relatorioVeiculosEntradas(date, v5);
-		estacionamento.relatorioVeiculosEntradas(date, v6);
-		estacionamento.relatorioVeiculosEntradas(date, v7);
-		estacionamento.relatorioVeiculosEntradas(date, v8);
-
-		//fim testes
-		
 		setBorder(null);
 		getContentPane().setBackground(new Color(43, 52, 61));
 		setBounds(90, 10, 800, 520);
@@ -116,6 +71,7 @@ public class TelaStatus extends JInternalFrame {
 
 		// Data
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		
 		JLabel lblData = new JLabel("Data");
 		lblData.setHorizontalAlignment(SwingConstants.CENTER);
 		lblData.setForeground(new Color(43, 52, 67));
@@ -124,7 +80,6 @@ public class TelaStatus extends JInternalFrame {
 		LocalDate dataf = LocalDate.now();
 		lblData.setText(fmt.format(dataf));
 		panelConsultar.add(lblData);
-
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBackground(Color.WHITE);
@@ -167,6 +122,7 @@ public class TelaStatus extends JInternalFrame {
 		lblCategoria.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 		JButton btnGerarStatus = new JButton("Gerar");
+		btnGerarStatus.setIcon(new ImageIcon(TelaStatus.class.getResource("../images/search.png")));
 		btnGerarStatus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel table = (DefaultTableModel) tableRelStatus.getModel();
@@ -188,8 +144,10 @@ public class TelaStatus extends JInternalFrame {
 		panelConsultar.add(btnGerarStatus);
 
 		JButton btnLimpar = new JButton("Limpar");
+		btnLimpar.setIcon(new ImageIcon(TelaStatus.class.getResource("../images/erase.png")));
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				comboBoxCateg.setSelectedItem("");
 				tableRelStatus.setModel(new DefaultTableModel(null, new String[] { "Data", "Placa", "Proprietario" }));
 			}
 		});
@@ -202,10 +160,10 @@ public class TelaStatus extends JInternalFrame {
 				dispose();
 			}
 		});
-		btnFechar.setIcon(new ImageIcon(TelaStatus.class.getResource("/images/close.png")));
+		btnFechar.setIcon(new ImageIcon(TelaStatus.class.getResource("../images/close.png")));
 		btnFechar.setBounds(686, 232, 104, 41);
 		panelGerenciar.add(btnFechar);
-		
+
 		getContentPane().setLayout(groupLayout);
 
 	}

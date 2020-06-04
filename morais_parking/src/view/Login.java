@@ -20,11 +20,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import model.Estacionamento;
-import model.Memoria;
 
 public class Login extends JFrame {
-	private Memoria memoria = new Memoria();
-	private Estacionamento estacionamento = memoria.getEstacionamento();
 
 	private JTextField textUsuario;
 	private JPasswordField textSenha;
@@ -45,22 +42,15 @@ public class Login extends JFrame {
 				}
 			}
 		});
+
 	}
 
 	/**
 	 * Create the frame.
 	 */
 	public Login() {
-		// Testes
-
-		estacionamento.cadastrarUsuario("Arthur Lacet", "10973236418", "165a", "Setor Pessoal", "Funcionario RH", 
-				"Arthur", "voltas28");
-		estacionamento.cadastrarUsuario("Lucelia Lacet", "10973236418","16878a", "Estacionamento", "Funcionario Estacionamento",
-				 "Lucelia", "voltas17");
-		estacionamento.cadastrarUsuario("Iria Guazzi", "10973236418","13548t", "Estacionamento", "Gestor",  "Iria",
-				"1234");
-
-		// Fim Testes
+		Estacionamento estacionamento = Estacionamento.getInstancia();
+		estacionamento.memoria();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(460, 200, 450, 300);
@@ -86,7 +76,7 @@ public class Login extends JFrame {
 
 		JLabel label_1 = new JLabel("");
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setIcon(new ImageIcon(Login.class.getResource("/images/user.png")));
+		label_1.setIcon(new ImageIcon(Login.class.getResource("../images/user.png")));
 		label_1.setBounds(76, 51, 46, 29);
 		contentPane.add(label_1);
 
@@ -121,13 +111,13 @@ public class Login extends JFrame {
 		contentPane.add(textSenha);
 
 		JLabel label_2 = new JLabel("");
-		label_2.setIcon(new ImageIcon(Login.class.getResource("/images/lock.png")));
+		label_2.setIcon(new ImageIcon(Login.class.getResource("../images/lock.png")));
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
 		label_2.setBounds(76, 92, 46, 29);
 		contentPane.add(label_2);
 
 		JLabel logo = new JLabel("New label");
-		logo.setIcon(new ImageIcon(Login.class.getResource("/images/logo.png")));
+		logo.setIcon(new ImageIcon(Login.class.getResource("../images/logo.png")));
 		logo.setBounds(26, 188, 129, 62);
 		contentPane.add(logo);
 

@@ -59,13 +59,7 @@ public class TelaFuncionario extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public TelaFuncionario() {
-		Estacionamento estacionamento = new Estacionamento();
-
-		// Testes
-		estacionamento.cadastrarVeiculo("Iria Guazzi", "20192007043", "SI", "QFX-9310", "HB-20", "CARRO");
-		estacionamento.cadastrarVeiculo("Roberto Mendes", "20192007007", "SI", "OXX-4455", "Ford K", "PREFERENCIAL");
-		estacionamento.cadastrarVeiculo("Motô do Dominó", "n/a", "n/a", "OZZ-3333", "Mercedez - Van", "VAN");
-		estacionamento.cadastrarVeiculo("Onildo", "n/a", "n/a", "OFH-8830", "Ford KA", "CARRO");
+		Estacionamento estacionamento = Estacionamento.getInstancia();
 
 		// Definir Máscaras
 		MaskFormatter mascaraPlaca = null;
@@ -160,14 +154,14 @@ public class TelaFuncionario extends JInternalFrame {
 		btnCadastrar.setBounds(550, 142, 181, 48);
 		btnCadastrar.setIcon(new ImageIcon(TelaFuncionario.class.getResource("/images/confirm.png")));
 		panelCadastro.add(btnCadastrar);
-		btnCadastrar.setBackground(Color.WHITE);
-
+		btnCadastrar.setBackground(new Color(240, 240, 240));
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String placa = "";
 				Veiculo veiculo = estacionamento.validarVeiculo(textPlaca.getText());
 				if (veiculo != null) {
 					placa = textPlaca.getText();
+					veiculo.setCategoria("Funcionário");
 				} else {
 					JOptionPane.showMessageDialog(null, "Veículo não Cadastrado!");
 				}
@@ -191,16 +185,6 @@ public class TelaFuncionario extends JInternalFrame {
 
 		getContentPane().add(panel);
 		panel.setLayout(null);
-
-		JButton btnFechar = new JButton("Fechar");
-		btnFechar.setBounds(686, 191, 104, 41);
-		panel.add(btnFechar);
-		btnFechar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		btnFechar.setIcon(new ImageIcon(TelaStatus.class.getResource("/images/close.png")));
 
 		JLabel labelTituloConsulta = new JLabel("Consultar Funcion\u00E1rio");
 		labelTituloConsulta.setForeground(new Color(43, 52, 61));
@@ -241,7 +225,7 @@ public class TelaFuncionario extends JInternalFrame {
 				if (funcionario != null) {
 					textInfoProp.setText(funcionario.toString());
 				} else {
-					textInfoProp.setText("Acesso de Funcionário não solicitado!");
+					textInfoProp.setText("Funcionário não cadastrado!");
 				}
 				Veiculo veiculo = estacionamento.validarVeiculo(funcionario.getPlaca());
 				if (veiculo != null) {
@@ -267,5 +251,16 @@ public class TelaFuncionario extends JInternalFrame {
 		btnLimpar.setIcon(new ImageIcon(TelaFuncionario.class.getResource("/images/erase.png")));
 		btnLimpar.setBounds(439, 40, 110, 28);
 		panel.add(btnLimpar);
+
+		JButton btnFechar = new JButton("Fechar");
+		btnFechar.setBounds(686, 191, 104, 41);
+		panel.add(btnFechar);
+		btnFechar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnFechar.setIcon(new ImageIcon(TelaStatus.class.getResource("/images/close.png")));
+
 	}
 }

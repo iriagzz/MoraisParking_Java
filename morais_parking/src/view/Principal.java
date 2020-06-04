@@ -24,12 +24,11 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
-import model.Estacionamento;
-import model.Memoria;
+
+
 
 public class Principal extends javax.swing.JFrame {
-	private Memoria memoria = new Memoria();
-	private Estacionamento estacionamento = memoria.getEstacionamento();
+
 
 	/**
 	 * Launch the application.
@@ -48,7 +47,7 @@ public class Principal extends javax.swing.JFrame {
 				}
 			}
 		});
-
+	
 	}
 
 	/**
@@ -66,7 +65,7 @@ public class Principal extends javax.swing.JFrame {
 		desktopPane.setLayout(null);
 
 		JLabel labelBG = new JLabel("");
-		labelBG.setIcon(new ImageIcon(Principal.class.getResource("/images/parkingbg.jpg")));
+		labelBG.setIcon(new ImageIcon(Principal.class.getResource("../images/parkingbg.jpg")));
 		labelBG.setBounds(-63, -105, 606, 673);
 		desktopPane.add(labelBG);
 
@@ -123,7 +122,7 @@ public class Principal extends javax.swing.JFrame {
 
 		// Botão Estacionamento
 		JMenu mnEstacionamento = new JMenu("Estacionamento");
-		mnEstacionamento.setIcon(new ImageIcon(Principal.class.getResource("/images/parking.png")));
+		mnEstacionamento.setIcon(new ImageIcon(Principal.class.getResource("../images/parking.png")));
 		mnEstacionamento.setMnemonic('E');
 		mnEstacionamento.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menuBar.add(mnEstacionamento);
@@ -172,7 +171,7 @@ public class Principal extends javax.swing.JFrame {
 
 		// Botão Eventos
 		JMenu mnEventos = new JMenu("Eventos");
-		mnEventos.setIcon(new ImageIcon(Principal.class.getResource("/images/events.png")));
+		mnEventos.setIcon(new ImageIcon(Principal.class.getResource("../images/events.png")));
 		mnEventos.setMnemonic('V');
 		mnEventos.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menuBar.add(mnEventos);
@@ -196,12 +195,20 @@ public class Principal extends javax.swing.JFrame {
 		mnEventos.add(mntmGerenciarEventos);
 
 		JMenuItem mntmConsultarEvento = new JMenuItem("Consultar");
+		mntmConsultarEvento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaConsultaOcorrencia tela = new TelaConsultaOcorrencia();
+				desktopPane.add(tela);
+				tela.setVisible(true);
+				
+			}
+		});
 		mntmConsultarEvento.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnEventos.add(mntmConsultarEvento);
 
 		// Botão Ocorrências
 		JMenu mnOcorrencias = new JMenu("Ocorr\u00EAncias");
-		mnOcorrencias.setIcon(new ImageIcon(Principal.class.getResource("/images/crash.png")));
+		mnOcorrencias.setIcon(new ImageIcon(Principal.class.getResource("../images/crash.png")));
 		mnOcorrencias.setMnemonic('O');
 		mnOcorrencias.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menuBar.add(mnOcorrencias);
@@ -225,12 +232,19 @@ public class Principal extends javax.swing.JFrame {
 
 		
 		JMenuItem mntmConsultar = new JMenuItem("Consultar");
+		mntmConsultar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				TelaConsultaOcorrencia tela = new TelaConsultaOcorrencia();
+				desktopPane.add(tela);
+				tela.setVisible(true);	
+			}
+		});
 		mntmConsultar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnOcorrencias.add(mntmConsultar);
 
 		//Botão Relatórios
 		JMenu mnRelatorios = new JMenu("Relat\u00F3rios");
-		mnRelatorios.setIcon(new ImageIcon(Principal.class.getResource("/images/reports.png")));
+		mnRelatorios.setIcon(new ImageIcon(Principal.class.getResource("../images/reports.png")));
 		mnRelatorios.setMnemonic('R');
 		mnRelatorios.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menuBar.add(mnRelatorios);
@@ -259,7 +273,7 @@ public class Principal extends javax.swing.JFrame {
 
 		// BotãoGestor
 		JMenu mnGestor = new JMenu("Gestor");
-		mnGestor.setIcon(new ImageIcon(Principal.class.getResource("/images/manager.png")));
+		mnGestor.setIcon(new ImageIcon(Principal.class.getResource("../images/manager.png")));
 		mnGestor.setMnemonic('G');
 		mnGestor.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnGestor.setBackground(Color.DARK_GRAY);
@@ -271,14 +285,17 @@ public class Principal extends javax.swing.JFrame {
 			mnGestor.setEnabled(false);
 		}
 
-		JMenuItem mntmPermissoesAcesso = new JMenuItem("Permiss\u00F5es Acesso");
-		mntmPermissoesAcesso.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mnGestor.add(mntmPermissoesAcesso);
-
 		JSeparator separator = new JSeparator();
 		mnGestor.add(separator);
 
 		JMenuItem mntmareas = new JMenuItem("\u00C1reas do Estacionamento");
+		mntmareas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaAreas tela = new TelaAreas();
+				desktopPane.add(tela);
+				tela.setVisible(true);	
+			}
+		});
 		mntmareas.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnGestor.add(mntmareas);
 		
@@ -299,7 +316,7 @@ public class Principal extends javax.swing.JFrame {
 		// Botão RH
 		JMenu mnRh = new JMenu("RH");
 		mnRh.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mnRh.setIcon(new ImageIcon(Principal.class.getResource("/images/profile.png")));
+		mnRh.setIcon(new ImageIcon(Principal.class.getResource("../images/profile.png")));
 		mnRh.setMnemonic('h');
 		menuBar.add(mnRh);
 		// permissão de acesso

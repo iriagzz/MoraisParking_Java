@@ -80,12 +80,20 @@ public class Ocorrencias {
 	public void adicionarVeiculo(Veiculo veiculo) {
 		this.veiculosOcorrencia.add(veiculo);
 	}
+	
+	public ArrayList<String> placasOcorrencia(){
+		ArrayList<String> listVeic = new ArrayList<>();
+		for (Veiculo veiculo : this.veiculosOcorrencia) {
+			listVeic.add(veiculo.getPlaca());	
+		}
+		return listVeic;
+	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("ID: " + this.id + "\n");
 		sb.append("Ocorrência: " + this.tipo + "\n");
-		sb.append("Veículos: " + this.veiculosOcorrencia + "\n");
+		sb.append("Veículos: " + placasOcorrencia() + "\n");
 		sb.append("Data: " + this.data + "\n");
 		sb.append("Hora: " + this.hora + "\n");
 		sb.append("Resumo dos fatos: " + this.fatos);
