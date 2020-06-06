@@ -25,8 +25,8 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
+import model.Areas;
 import model.Estacionamento;
-
 import model.Veiculo;
 
 public class TelaVeiculos extends JInternalFrame {
@@ -55,7 +55,6 @@ public class TelaVeiculos extends JInternalFrame {
 	public TelaVeiculos() {
 
 		Estacionamento estacionamento = Estacionamento.getInstancia();
-		
 
 		// Definir Máscaras
 		MaskFormatter mascaraPlaca = null;
@@ -131,8 +130,8 @@ public class TelaVeiculos extends JInternalFrame {
 		JComboBox comboBoxCateg = new JComboBox();
 
 		// caso o gestor inclua nova área, essa já será inserida no combobox do veículo
-		for (String categoria : estacionamento.getCategorias()) {
-			comboBoxCateg.addItem(categoria);
+		for (Areas area : estacionamento.getControleAreas()) {
+			comboBoxCateg.addItem(area.getCategoria());
 		}
 
 		comboBoxCateg.setBounds(130, 230, 268, 30);
@@ -152,8 +151,6 @@ public class TelaVeiculos extends JInternalFrame {
 				textModelo.setText("");
 				textCurso.setText("");
 				textMatricula.setText("");
-				
-				
 			}
 		});
 
@@ -252,9 +249,7 @@ public class TelaVeiculos extends JInternalFrame {
 					textResulBusca.setText("");
 				} else {
 					textResulBusca.setText("Veículo não Localizado!");
-
 				}
-
 			}
 		});
 		btnRemoverVeiculo.setBounds(532, 72, 168, 44);

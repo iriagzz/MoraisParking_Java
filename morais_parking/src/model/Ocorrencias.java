@@ -80,11 +80,11 @@ public class Ocorrencias {
 	public void adicionarVeiculo(Veiculo veiculo) {
 		this.veiculosOcorrencia.add(veiculo);
 	}
-	
-	public ArrayList<String> placasOcorrencia(){
+
+	public ArrayList<String> placasOcorrencia() {
 		ArrayList<String> listVeic = new ArrayList<>();
 		for (Veiculo veiculo : this.veiculosOcorrencia) {
-			listVeic.add(veiculo.getPlaca());	
+			listVeic.add(veiculo.getPlaca());
 		}
 		return listVeic;
 	}

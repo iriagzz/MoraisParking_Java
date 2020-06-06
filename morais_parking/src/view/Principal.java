@@ -23,12 +23,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
-
-
-
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 
 public class Principal extends javax.swing.JFrame {
-
 
 	/**
 	 * Launch the application.
@@ -36,7 +34,7 @@ public class Principal extends javax.swing.JFrame {
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable() {
-			private String funcao;
+			private String funcao; //atributo funcao, que muda de acordo com o login do usuario (tela login)
 
 			public void run() {
 				try {
@@ -47,7 +45,7 @@ public class Principal extends javax.swing.JFrame {
 				}
 			}
 		});
-	
+
 	}
 
 	/**
@@ -76,8 +74,9 @@ public class Principal extends javax.swing.JFrame {
 		lblSystem.setBounds(599, 168, 319, 64);
 		desktopPane.add(lblSystem);
 
-		// Data e Hora
+		// Formato Data e Hora
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		
 		JLabel lblTime = new JLabel("Hora");
 		lblTime.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTime.setForeground(SystemColor.activeCaption);
@@ -85,7 +84,7 @@ public class Principal extends javax.swing.JFrame {
 		lblTime.setBounds(599, 253, 319, 64);
 		desktopPane.add(lblTime);
 
-		// para que a hora fique atualizando
+		/* para que a hora fique atualizando */
 		ActionListener updateClockAction = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Date data = new Date();
@@ -126,6 +125,7 @@ public class Principal extends javax.swing.JFrame {
 		mnEstacionamento.setMnemonic('E');
 		mnEstacionamento.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menuBar.add(mnEstacionamento);
+		
 		// permissão de acesso
 		if (funcao.equalsIgnoreCase("Funcionario RH")) {
 			mnEstacionamento.setEnabled(false);
@@ -175,6 +175,7 @@ public class Principal extends javax.swing.JFrame {
 		mnEventos.setMnemonic('V');
 		mnEventos.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menuBar.add(mnEventos);
+		
 		// permissão de acesso
 		if (funcao.equalsIgnoreCase("Funcionario RH")) {
 			mnEventos.setEnabled(false);
@@ -182,7 +183,7 @@ public class Principal extends javax.swing.JFrame {
 			mnEventos.setEnabled(true);
 		}
 
-		//Abre a tela Eventos
+		// Abre a tela Eventos
 		JMenuItem mntmGerenciarEventos = new JMenuItem("Cadastrar");
 		mntmGerenciarEventos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -193,18 +194,18 @@ public class Principal extends javax.swing.JFrame {
 		});
 		mntmGerenciarEventos.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnEventos.add(mntmGerenciarEventos);
-
-		JMenuItem mntmConsultarEvento = new JMenuItem("Consultar");
-		mntmConsultarEvento.addActionListener(new ActionListener() {
+		
+		//Abre a tela de Reservar Area p Eventos
+		JMenuItem mntmReservarrea = new JMenuItem("Reservar \u00C1rea");
+		mntmReservarrea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaConsultaOcorrencia tela = new TelaConsultaOcorrencia();
+				TelaAreaEventos tela = new TelaAreaEventos();
 				desktopPane.add(tela);
 				tela.setVisible(true);
-				
 			}
 		});
-		mntmConsultarEvento.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mnEventos.add(mntmConsultarEvento);
+		mntmReservarrea.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mnEventos.add(mntmReservarrea);
 
 		// Botão Ocorrências
 		JMenu mnOcorrencias = new JMenu("Ocorr\u00EAncias");
@@ -218,7 +219,7 @@ public class Principal extends javax.swing.JFrame {
 		} else {
 			mnOcorrencias.setEnabled(true);
 		}
-		//Abrir tela Ocorrencias
+		// Abrir tela Ocorrencias
 		JMenuItem mntmGerenciarOcorrncias = new JMenuItem("Cadastrar");
 		mntmGerenciarOcorrncias.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -230,25 +231,24 @@ public class Principal extends javax.swing.JFrame {
 		mntmGerenciarOcorrncias.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnOcorrencias.add(mntmGerenciarOcorrncias);
 
-		
 		JMenuItem mntmConsultar = new JMenuItem("Consultar");
 		mntmConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				TelaConsultaOcorrencia tela = new TelaConsultaOcorrencia();
 				desktopPane.add(tela);
-				tela.setVisible(true);	
+				tela.setVisible(true);
 			}
 		});
 		mntmConsultar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnOcorrencias.add(mntmConsultar);
 
-		//Botão Relatórios
+		// Botão Relatórios
 		JMenu mnRelatorios = new JMenu("Relat\u00F3rios");
 		mnRelatorios.setIcon(new ImageIcon(Principal.class.getResource("../images/reports.png")));
 		mnRelatorios.setMnemonic('R');
 		mnRelatorios.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menuBar.add(mnRelatorios);
-		//Permissao de Acesso
+		// Permissao de Acesso
 		if (funcao.equalsIgnoreCase("gestor")) {
 			mnRelatorios.setEnabled(true);
 		} else {
@@ -278,7 +278,7 @@ public class Principal extends javax.swing.JFrame {
 		mnGestor.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnGestor.setBackground(Color.DARK_GRAY);
 		menuBar.add(mnGestor);
-		//Permissão de acesso
+		// Permissão de acesso
 		if (funcao.equalsIgnoreCase("gestor")) {
 			mnGestor.setEnabled(true);
 		} else {
@@ -288,26 +288,28 @@ public class Principal extends javax.swing.JFrame {
 		JSeparator separator = new JSeparator();
 		mnGestor.add(separator);
 
+		//Botao Areas
 		JMenuItem mntmareas = new JMenuItem("\u00C1reas do Estacionamento");
 		mntmareas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaAreas tela = new TelaAreas();
 				desktopPane.add(tela);
-				tela.setVisible(true);	
+				tela.setVisible(true);
 			}
 		});
 		mntmareas.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnGestor.add(mntmareas);
-		
+
 		JSeparator separator_1 = new JSeparator();
 		mnGestor.add(separator_1);
-		
+
+		//Botao Cadastro Usuario
 		JMenuItem mntmCadastroDeUsurios = new JMenuItem("Cadastro de Usu\u00E1rios");
 		mntmCadastroDeUsurios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				TelaUsuario tela = new TelaUsuario();
 				desktopPane.add(tela);
-				tela.setVisible(true);	
+				tela.setVisible(true);
 			}
 		});
 		mntmCadastroDeUsurios.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -326,7 +328,7 @@ public class Principal extends javax.swing.JFrame {
 			mnRh.setEnabled(false);
 		}
 
-		//Abrir tela Cadastrar Funcionario
+		// Abrir tela Cadastrar Funcionario
 		JMenuItem mntmCads = new JMenuItem("Cadastrar Funicion\u00E1rio");
 		mntmCads.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mntmCads.addActionListener(new ActionListener() {
@@ -337,6 +339,25 @@ public class Principal extends javax.swing.JFrame {
 			}
 		});
 		mnRh.add(mntmCads);
+		
+		//Botao Logout
+		JMenu mnLogout = new JMenu("Logout");
+		mnLogout.setIcon(new ImageIcon(Principal.class.getResource("/images/exit2.png")));
+		mnLogout.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		menuBar.add(mnLogout);
+		
+		//Botao Troca Usuario
+		JMenuItem mntmTrocarUsurio = new JMenuItem("Trocar Usu\u00E1rio");
+		mntmTrocarUsurio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Login frm = new Login();
+				frm.setVisible(true);
+				dispose();
+			}
+			
+		});
+		mntmTrocarUsurio.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mnLogout.add(mntmTrocarUsurio);
 		setTitle("Morais' Parking System");
 	}
 }

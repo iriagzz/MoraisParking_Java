@@ -23,6 +23,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import model.Areas;
 import model.Estacionamento;
 import model.Proprietario;
 import model.Relatorios;
@@ -71,7 +72,7 @@ public class TelaStatus extends JInternalFrame {
 
 		// Data
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		
+
 		JLabel lblData = new JLabel("Data");
 		lblData.setHorizontalAlignment(SwingConstants.CENTER);
 		lblData.setForeground(new Color(43, 52, 67));
@@ -86,6 +87,7 @@ public class TelaStatus extends JInternalFrame {
 		scrollPane.setBounds(73, 24, 659, 197);
 		panelGerenciar.add(scrollPane);
 
+		//criar tabela
 		tableRelStatus = new JTable();
 		tableRelStatus.setBackground(Color.WHITE);
 		tableRelStatus
@@ -105,8 +107,8 @@ public class TelaStatus extends JInternalFrame {
 		comboBoxCateg.addItem("");
 
 		// caso o gestor inclua nova área, essa já será inserida no combobox do veículo
-		for (String categoria : estacionamento.getCategorias()) {
-			comboBoxCateg.addItem(categoria);
+		for (Areas area : estacionamento.getControleAreas()) {
+			comboBoxCateg.addItem(area.getCategoria());
 		}
 
 		JLabel lblConsultarArea = new JLabel("Consultar Status");
@@ -121,6 +123,7 @@ public class TelaStatus extends JInternalFrame {
 		lblCategoria.setForeground(new Color(43, 52, 61));
 		lblCategoria.setFont(new Font("Tahoma", Font.BOLD, 14));
 
+		/* inserir dados na tabela */
 		JButton btnGerarStatus = new JButton("Gerar");
 		btnGerarStatus.setIcon(new ImageIcon(TelaStatus.class.getResource("../images/search.png")));
 		btnGerarStatus.addActionListener(new ActionListener() {

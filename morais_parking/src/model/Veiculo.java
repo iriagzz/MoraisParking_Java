@@ -18,13 +18,13 @@ public class Veiculo {
 
 	// Getters and Setters
 	public Proprietario getProprietario() {
-			return proprietario;
+		return proprietario;
 	}
-	
+
 	public void setProprietario(Proprietario proprietario) {
 		this.proprietario = proprietario;
 	}
-	
+
 	public String getPlaca() {
 		return placa;
 	}
@@ -49,9 +49,8 @@ public class Veiculo {
 		this.categoria = categoria;
 	}
 
-	
 	// Metodos
-		
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(proprietario.toString() + "\n");

@@ -28,13 +28,13 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
+import model.Areas;
 import model.Estacionamento;
 
 import model.Veiculo;
 
 public class TelaControleAcesso extends JInternalFrame {
 
-	
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable() {
@@ -47,12 +47,13 @@ public class TelaControleAcesso extends JInternalFrame {
 				}
 			}
 		});
-		
+
 	}
 
 	public TelaControleAcesso() {
 		Estacionamento estacionamento = Estacionamento.getInstancia();
-		
+
+		// Formato Data
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 		// Definir Máscaras
@@ -102,6 +103,15 @@ public class TelaControleAcesso extends JInternalFrame {
 		lblMonitoramento.setBounds(10, 21, 139, 37);
 		panelGerenciar.add(lblMonitoramento);
 
+		JLabel lblData = new JLabel("data");
+		lblData.setHorizontalAlignment(SwingConstants.CENTER);
+		lblData.setForeground(new Color(43, 52, 67));
+		lblData.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblData.setBounds(170, 11, 236, 37);
+		panelConsultar.add(lblData);
+		LocalDate data = LocalDate.now();
+		lblData.setText(fmt.format(data));
+
 		JProgressBar progressBarOcupacao = new JProgressBar();
 		progressBarOcupacao.setForeground(new Color(43, 52, 67));
 		progressBarOcupacao.setStringPainted(true);
@@ -111,10 +121,10 @@ public class TelaControleAcesso extends JInternalFrame {
 		comboBoxArea.setBounds(20, 110, 186, 31);
 		panelGerenciar.add(comboBoxArea);
 
-		// caso o gestor inclua nova área, essa já será inserida no combobox do veículo
 		comboBoxArea.addItem("");
-		for (String categoria : estacionamento.getCategorias()) {
-			comboBoxArea.addItem(categoria);
+		// caso o gestor inclua nova área, essa já será inserida no combobox do veículo
+		for (Areas area : estacionamento.getControleAreas()) {
+			comboBoxArea.addItem(area.getCategoria());
 		}
 
 		// Quando selecionar o comboBox, o progresso já atualiza a depender da área
@@ -151,15 +161,6 @@ public class TelaControleAcesso extends JInternalFrame {
 		lblPlaca.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblPlaca.setBounds(106, 71, 48, 37);
 		panelConsultar.add(lblPlaca);
-
-		JLabel lblData = new JLabel("data");
-		lblData.setHorizontalAlignment(SwingConstants.CENTER);
-		lblData.setForeground(new Color(43, 52, 67));
-		lblData.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblData.setBounds(170, 11, 236, 37);
-		panelConsultar.add(lblData);
-		LocalDate data = LocalDate.now();
-		lblData.setText(fmt.format(data));
 
 		JFormattedTextField textPlaca = new JFormattedTextField(mascaraPlaca);
 		textPlaca.setBounds(150, 76, 129, 30);
@@ -198,7 +199,7 @@ public class TelaControleAcesso extends JInternalFrame {
 		JButton btnRegistrarSaida = new JButton("Registrar Sa\u00EDda");
 		btnRegistrarSaida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				estacionamento.validarSaida(textPlaca.getText()) ;
+				estacionamento.validarSaida(textPlaca.getText());
 				comboBoxArea.setSelectedItem(textArea.getText());
 				textPlaca.setText("");
 				textResulBusca.setText("");
@@ -210,7 +211,7 @@ public class TelaControleAcesso extends JInternalFrame {
 		btnRegistrarSaida.setIcon(new ImageIcon(TelaControleAcesso.class.getResource("/images/down-arrow.png")));
 		btnRegistrarSaida.setBounds(263, 134, 168, 44);
 		panelConsultar.add(btnRegistrarSaida);
-		
+
 		JButton btnVerificar = new JButton("Verificar");
 		btnVerificar.setBounds(294, 80, 89, 23);
 		getContentPane().setLayout(groupLayout);
@@ -227,11 +228,9 @@ public class TelaControleAcesso extends JInternalFrame {
 					btnRegistrarEntrada.setEnabled(false);
 					textResulBusca.setText("Veículo não Localizado!");
 				}
-				
+
 			}
 		});
-
-	
 
 	}
 }

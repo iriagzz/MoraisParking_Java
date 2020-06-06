@@ -174,8 +174,6 @@ public class TelaFuncionario extends JInternalFrame {
 				comboBoxPermissao.setSelectedItem("");
 				textSetor.setText("");
 				textPlaca.setText("");
-
-				System.out.println(estacionamento.getCadastroFuncionario());
 			}
 		});
 

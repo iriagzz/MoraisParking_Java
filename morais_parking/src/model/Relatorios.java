@@ -9,6 +9,7 @@ public class Relatorios {
 
 	private LocalDate data;
 	private Veiculo veiculo;
+
 	public Relatorios() {
 	}
 
@@ -16,7 +17,7 @@ public class Relatorios {
 		this.data = data;
 		this.veiculo = veiculo;
 	}
-			
+
 	public LocalDate getData() {
 		return data;
 	}
@@ -32,11 +33,11 @@ public class Relatorios {
 	public void setVeiculo(Veiculo veiculo) {
 		this.veiculo = veiculo;
 	}
-	
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Data " + this.data + " | ");
-		sb.append("Veiculo: " + this.veiculo );
+		sb.append("Veiculo: " + this.veiculo);
 		return sb.toString();
 	}
 }

@@ -12,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,8 +22,6 @@ import javax.swing.JTextPane;
 import javax.swing.text.MaskFormatter;
 
 import model.Estacionamento;
-import javax.swing.JFormattedTextField;
-import javax.swing.JComboBox;
 
 public class TelaOcorrencias extends JInternalFrame {
 	private JTextField textNumeroDeVeiculos;
@@ -170,7 +170,7 @@ public class TelaOcorrencias extends JInternalFrame {
 		JButton btnCadastrarOcorrencia = new JButton("Cadastrar");
 		btnCadastrarOcorrencia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textID.setText(String.valueOf(estacionamento.getCadastroOcorrencias().size()+1));
+				textID.setText(String.valueOf(estacionamento.getCadastroOcorrencias().size() + 1));
 				comboBoxTipo.setSelectedItem("");
 				textNumeroDeVeiculos.setText("");
 				textData.setText("");

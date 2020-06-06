@@ -50,7 +50,8 @@ public class Eventos {
 	public void setVagas(Integer vagas) {
 		this.vagas = vagas;
 	}
-
+	
+	
 	// Methods
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

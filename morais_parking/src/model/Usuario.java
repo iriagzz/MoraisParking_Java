@@ -18,8 +18,7 @@ public class Usuario extends Pessoa {
 		this.senha = senha;
 	}
 
-	
-	//Getters and Setters
+	// Getters and Setters
 	public String getMatricula() {
 		return matricula;
 	}
@@ -47,11 +46,11 @@ public class Usuario extends Pessoa {
 	// Methods
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Nome: " + nome + "\n");
-		sb.append("CPF: " + cpf + "\n");
-		sb.append("Matrícula: " + matricula + "\n");
-		sb.append("Permissão: " + funcao + "\n");
-		sb.append("Setor: " + setor + "\n");
+		sb.append("Nome: " + this.nome + "\n");
+		sb.append("CPF: " + this.cpf + "\n");
+		sb.append("Matrícula: " + this.matricula + "\n");
+		sb.append("Permissão: " + this.funcao + "\n");
+		sb.append("Setor: " + this.setor + "\n");
 		sb.append("Usuário: " + this.usuario + "\n");
 		return sb.toString();
 	}

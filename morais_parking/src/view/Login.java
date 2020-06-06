@@ -83,9 +83,10 @@ public class Login extends JFrame {
 		JButton btnLogin = new JButton("Entrar");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/*valida o login e o retorno da funcao do usuario vai ser inserido como atributo da tela que vai abrir*/
 				if (estacionamento.login(textUsuario.getText(), new String(textSenha.getPassword()))) {
 					String funcao = estacionamento.retornarFuncao((textUsuario.getText()));
-					Principal frm = new Principal(funcao);
+					Principal frm = new Principal(funcao); //funcao do usuario como atributo da tela
 					frm.setVisible(true);
 					dispose();
 

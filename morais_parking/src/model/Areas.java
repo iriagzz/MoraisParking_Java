@@ -56,14 +56,14 @@ public class Areas {
 		this.veiculosArea.remove(veiculo);
 	}
 
-	//Listar Veiculos na Área
+	// Listar Veiculos na Área
 	public Veiculo veiculosArea(Veiculo veiculo) {
 		for (Veiculo veic : veiculosArea) {
 			return veic;
 		}
 		return null;
 	}
-	
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Área: " + this.nome + "\n");

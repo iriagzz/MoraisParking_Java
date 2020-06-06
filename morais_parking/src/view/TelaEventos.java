@@ -12,19 +12,21 @@ import java.time.format.DateTimeFormatter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
+import model.Areas;
 import model.Estacionamento;
-import javax.swing.JComboBox;
-import javax.swing.JScrollPane;
+import model.Eventos;
 
 public class TelaEventos extends JInternalFrame {
 	private JTextField textNome;
@@ -32,7 +34,6 @@ public class TelaEventos extends JInternalFrame {
 	private JTextField textDuracao;
 	private JTextField textVagas;
 	private JFormattedTextField formattedDate;
-	private JTextField textQuantVagas;
 	private JTable tableCateg;
 
 	public static void main(String[] args) {
@@ -54,6 +55,7 @@ public class TelaEventos extends JInternalFrame {
 	public TelaEventos() {
 		Estacionamento estacionamento = Estacionamento.getInstancia();
 
+		// Formato Data
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 		// Definir Máscaras
@@ -79,12 +81,14 @@ public class TelaEventos extends JInternalFrame {
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBackground(Color.WHITE);
-		scrollPane.setBounds(51, 49, 429, 143);
+		scrollPane.setBounds(39, 86, 523, 143);
 		panelExibir.add(scrollPane);
 
+		/* Criar tabela */
 		tableCateg = new JTable();
 		tableCateg.setBackground(Color.WHITE);
-		tableCateg.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Categoria", "Vagas" }) {
+		tableCateg.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "Nome", "Data Início", "Duração (d)", "Vagas" }) {
 			boolean[] columnEditables = new boolean[] { false, false };
 
 			public boolean isCellEditable(int row, int column) {
@@ -93,11 +97,6 @@ public class TelaEventos extends JInternalFrame {
 		});
 		scrollPane.setViewportView(tableCateg);
 
-		JButton btnCadastrar = new JButton("Cadastrar Evento");
-		btnCadastrar.setBounds(547, 95, 161, 44);
-		panelExibir.add(btnCadastrar);
-		btnCadastrar.setIcon(new ImageIcon(TelaEventos.class.getResource("../images/add.png")));
-
 		JPanel panelCadastrar = new JPanel();
 		panelCadastrar.setBackground(SystemColor.inactiveCaption);
 		panelCadastrar.setBounds(0, 0, 800, 220);
@@ -105,7 +104,7 @@ public class TelaEventos extends JInternalFrame {
 		panelCadastrar.setLayout(null);
 
 		JLabel lblNome = new JLabel("Evento: ");
-		lblNome.setBounds(50, 35, 97, 17);
+		lblNome.setBounds(50, 33, 97, 25);
 		panelCadastrar.add(lblNome);
 		lblNome.setForeground(new Color(43, 52, 61));
 		lblNome.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -116,7 +115,7 @@ public class TelaEventos extends JInternalFrame {
 		textNome.setToolTipText("");
 
 		JLabel lblDuracao = new JLabel("Data de in\u00EDcio:");
-		lblDuracao.setBounds(50, 79, 97, 17);
+		lblDuracao.setBounds(50, 79, 97, 23);
 		panelCadastrar.add(lblDuracao);
 		lblDuracao.setForeground(new Color(43, 52, 61));
 		lblDuracao.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -132,7 +131,7 @@ public class TelaEventos extends JInternalFrame {
 		textDuracao.setToolTipText("");
 
 		JLabel lvlVagas = new JLabel("Vagas totais:");
-		lvlVagas.setBounds(50, 164, 107, 17);
+		lvlVagas.setBounds(50, 164, 107, 23);
 		panelCadastrar.add(lvlVagas);
 		lvlVagas.setForeground(new Color(43, 52, 61));
 		lvlVagas.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -143,64 +142,41 @@ public class TelaEventos extends JInternalFrame {
 		textVagas.setToolTipText("");
 
 		JLabel label_3 = new JLabel("Dura\u00E7\u00E3o:");
-		label_3.setBounds(50, 121, 97, 17);
+		label_3.setBounds(50, 121, 97, 23);
 		panelCadastrar.add(label_3);
 		label_3.setForeground(new Color(43, 52, 61));
 		label_3.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		JLabel lblSelecionarreas = new JLabel("Selecionar \u00C1reas");
-		lblSelecionarreas.setBounds(487, 35, 144, 23);
-		panelCadastrar.add(lblSelecionarreas);
-		lblSelecionarreas.setForeground(new Color(43, 52, 61));
-		lblSelecionarreas.setFont(new Font("Tahoma", Font.BOLD, 14));
+		JLabel lblCadastrarEvento = new JLabel("Cadastrar Evento");
+		lblCadastrarEvento.setForeground(new Color(43, 52, 61));
+		lblCadastrarEvento.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCadastrarEvento.setBounds(10, 1, 144, 23);
+		panelCadastrar.add(lblCadastrarEvento);
 
-		JComboBox comboBoxCateg = new JComboBox();
-		comboBoxCateg.addItem("");
-
-		// caso o gestor inclua nova área, essa já será inserida no combobox do veículo
-		for (String categoria : estacionamento.getCategorias()) {
-			comboBoxCateg.addItem(categoria);
+		JComboBox comboBoxEvento = new JComboBox();
+		comboBoxEvento.setBounds(126, 45, 177, 23);
+		panelExibir.add(comboBoxEvento);
+		comboBoxEvento.addItem("");
+		// com o cadastro de novos eventos, vai ser incluido no combobox.
+		for (Eventos evento : estacionamento.getControleEventos()) {
+			comboBoxEvento.addItem(evento.getNome());
 		}
 
-		comboBoxCateg.setBounds(487, 77, 233, 24);
-		panelCadastrar.add(comboBoxCateg);
-
-		textQuantVagas = new JTextField();
-		textQuantVagas.setBounds(634, 119, 86, 25);
-		panelCadastrar.add(textQuantVagas);
-		textQuantVagas.setColumns(10);
-
-		JButton btnIncluir = new JButton("Incluir");
-		btnIncluir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				DefaultTableModel table = (DefaultTableModel) tableCateg.getModel();
-				Object[] rowData = new Object[2];
-				rowData[0] = comboBoxCateg.getSelectedItem().toString();
-				rowData[1] = textQuantVagas.getText();
-				table.addRow(rowData);
-			}
-		});
-		btnIncluir.setBounds(631, 163, 89, 23);
-		panelCadastrar.add(btnIncluir);
-
-		JLabel labelQtdVagas = new JLabel("Vagas:");
-		labelQtdVagas.setForeground(new Color(43, 52, 61));
-		labelQtdVagas.setFont(new Font("Tahoma", Font.BOLD, 14));
-		labelQtdVagas.setBounds(563, 121, 70, 17);
-		panelCadastrar.add(labelQtdVagas);
+		JButton btnCadastrar = new JButton("Cadastrar Evento");
+		btnCadastrar.setBounds(547, 79, 161, 44);
+		panelCadastrar.add(btnCadastrar);
+		btnCadastrar.setIcon(new ImageIcon(TelaEventos.class.getResource("../images/add.png")));
 
 		// ação do botão cadastrar
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				estacionamento.cadastrarEvento(textNome.getText(), LocalDate.parse(textData.getText(), fmt),
 						Integer.parseInt(textDuracao.getText()), Integer.parseInt(textVagas.getText()));
-
+				comboBoxEvento.addItem(textNome.getText());
 				textNome.setText("");
 				textData.setText("");
 				textDuracao.setText("");
 				textVagas.setText("");
-				tableCateg.setModel(new DefaultTableModel(null, new String[] { "Categoria", "Vagas" }));
 			}
 		});
 
@@ -208,6 +184,54 @@ public class TelaEventos extends JInternalFrame {
 		panelExibir.add(btnFechar);
 		btnFechar.setIcon(new ImageIcon(TelaStatus.class.getResource("../images/close.png")));
 		btnFechar.setBounds(686, 188, 104, 41);
+
+		JLabel lblConsultarEvento = new JLabel("Consultar Evento");
+		lblConsultarEvento.setForeground(new Color(43, 52, 61));
+		lblConsultarEvento.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblConsultarEvento.setBounds(10, 0, 144, 34);
+		panelExibir.add(lblConsultarEvento);
+
+		JLabel label = new JLabel("Evento: ");
+		label.setForeground(new Color(43, 52, 61));
+		label.setFont(new Font("Tahoma", Font.BOLD, 14));
+		label.setBounds(39, 45, 97, 23);
+		panelExibir.add(label);
+
+		/* Insere valores na tabela */
+		JButton btnConsultar = new JButton("Consultar");
+		btnConsultar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DefaultTableModel table = (DefaultTableModel) tableCateg.getModel();
+				Object[] rowData = new Object[4];
+				Eventos evento = estacionamento.consultarEventoNome(comboBoxEvento.getSelectedItem().toString());
+				if (evento != null) {
+					rowData[0] = evento.getNome();
+					rowData[1] = fmt.format(evento.getDataInicio());
+					rowData[2] = evento.getDuracao();
+					rowData[3] = evento.getVagas();
+					table.addRow(rowData);
+				} else {
+					JOptionPane.showMessageDialog(null, "Evento não cadastrado!");
+				}
+			}
+
+		});
+
+		btnConsultar.setIcon(new ImageIcon(TelaEventos.class.getResource("/images/search.png")));
+		btnConsultar.setBounds(329, 45, 110, 23);
+		panelExibir.add(btnConsultar);
+
+		JButton btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				comboBoxEvento.setSelectedItem("");
+				tableCateg.setModel(
+						new DefaultTableModel(null, new String[] { "Nome", "Data Início", "Duração (d)", "Vagas" }));
+			}
+		});
+		btnLimpar.setIcon(new ImageIcon(TelaEventos.class.getResource("/images/erase.png")));
+		btnLimpar.setBounds(456, 45, 104, 23);
+		panelExibir.add(btnLimpar);
 		btnFechar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

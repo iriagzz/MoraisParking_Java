@@ -59,7 +59,6 @@ public class TelaUsuario extends JInternalFrame {
 
 		Estacionamento estacionamento = Estacionamento.getInstancia();
 
-		
 		// Definir Máscaras
 		MaskFormatter mascaraCpf = null;
 
@@ -182,8 +181,6 @@ public class TelaUsuario extends JInternalFrame {
 				textMatricula.setText("");
 				textCPF.setText("");
 				textSetor.setText("");
-
-				System.out.println(estacionamento.getCadastroUsuario());
 			}
 		});
 
